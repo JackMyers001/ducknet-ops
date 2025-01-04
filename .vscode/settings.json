@@ -1,0 +1,14 @@
+{
+    "yaml.keyOrdering": false,
+    "[yaml]": {
+        "editor.detectIndentation": false,
+        "editor.defaultFormatter": "redhat.vscode-yaml",
+        "editor.formatOnSave": true,
+        "editor.indentSize": "tabSize",
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "files.insertFinalNewline": true,
+        "files.trimFinalNewlines": true,
+        "files.trimTrailingWhitespace": true,
+    }
+}
