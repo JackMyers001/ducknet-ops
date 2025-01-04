@@ -1,0 +1,33 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/gitrepository-source-v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: ducknet-ops
+  namespace: flux-system
+spec:
+  interval: 10m
+  ref:
+    branch: main
+  secretRef:
+    name: github-pat
+  url: https://github.com/JackMyers001/ducknet-ops.git
+  ignore: |
+    # Exclude all
+    /*
+    # Include kubernetes directory
+    !/kubernetes
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: ducknet-cluster
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./kubernetes/flux
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: ducknet-ops
