@@ -37,6 +37,14 @@ spec:
       osd_class_update_on_start = false
 
     cephClusterSpec:
+      mon:
+        count: 1
+        allowMultiplePerNode: false
+
+      mgr:
+        count: 1
+        allowMultiplePerNode: false
+
       dashboard:
         enabled: true
         ssl: false
