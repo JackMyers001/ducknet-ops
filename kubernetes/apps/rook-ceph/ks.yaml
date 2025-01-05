@@ -11,7 +11,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: ducknet-ops
-  prune: true
+  prune: false # should never be deleted
   wait: false
   interval: 30m
   timeout: 5m
