@@ -6,7 +6,7 @@ metadata:
   name: fstrim
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/fstrim/app
+  path: ./kubernetes/apps/rook-ceph/app
   targetNamespace: fstrim
   sourceRef:
     kind: GitRepository
