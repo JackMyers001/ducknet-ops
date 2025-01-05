@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/gitrepository-source-v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: external-snapshotter
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/kubernetes-csi/external-snapshotter.git
+  ref:
+    tag: v8.2.0
+  ignore: |
+    # exclude all to whitelist
+    /*
+    # include CR
+    !/client/config/crd
+    # include controller
+    !/deploy/kubernetes/snapshot-controller

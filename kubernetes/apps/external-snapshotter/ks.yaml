@@ -3,16 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph
+  name: external-snapshotter-crds
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/rook-ceph/app
-  targetNamespace: rook-ceph
+  path: ./client/config/crd
   sourceRef:
     kind: GitRepository
-    name: ducknet-ops
+    name: external-snapshotter
   prune: false # should never be deleted
-  wait: false
+  wait: true
   interval: 30m
   timeout: 5m
 ---
@@ -20,18 +19,16 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-cluster
+  name: external-snapshotter-snapshot-controller
   namespace: flux-system
 spec:
-  path: ./kubernetes/apps/rook-ceph/cluster
-  targetNamespace: rook-ceph
+  path: ./deploy/kubernetes/snapshot-controller
   sourceRef:
     kind: GitRepository
-    name: ducknet-ops
+    name: external-snapshotter
   prune: false # should never be deleted
-  wait: false
+  wait: true
   interval: 30m
   timeout: 5m
   dependsOn:
-    - name: rook-ceph
-    - name: external-snapshotter-snapshot-controller
+    - name: external-snapshotter-crds
