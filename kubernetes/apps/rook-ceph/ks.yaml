@@ -15,3 +15,23 @@ spec:
   wait: false
   interval: 30m
   timeout: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: rook-ceph-cluster
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/rook-ceph/cluster
+  targetNamespace: rook-ceph
+  sourceRef:
+    kind: GitRepository
+    name: ducknet-ops
+  prune: false # should never be deleted
+  wait: false
+  interval: 30m
+  timeout: 5m
+  dependsOn:
+    - name: rook-ceph
+      namespace: flux-system
