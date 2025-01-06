@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+httpsapiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: external-secrets
+  namespace: external-secrets
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: external-secrets
+      version: 0.12.1
+      sourceRef:
+        kind: HelmRepository
+        name: external-secrets
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    # https://github.com/external-secrets/external-secrets/blob/main/deploy/charts/external-secrets/values.yaml
+
+    bitwarden-sdk-server:
+      enabled: true
+
+    replicaCount: 1
+    leaderElect: true
+
+    serviceMonitor:
+      enabled: true
+      interval: 1m
