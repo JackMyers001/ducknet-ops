@@ -23,6 +23,6 @@ spec:
 
       caProvider:
         type: Secret
-        name: bitwarden-tls-cert
+        name: bitwarden-tls-certs
         namespace: external-secrets
         key: ca.cert
