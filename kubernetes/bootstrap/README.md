@@ -38,4 +38,5 @@ helm install \
 
 - `kubectl apply --server-side --kustomize kubernetes/bootstrap`
 - `kubectl create -n flux-system secret generic github-pat --from-literal=username=git --from-literal=password=<PAT>`
+- `cat <sops-key.txt> | kubectl --namespace flux-system create secret generic sops-age --from-file=age.agekey=/dev/stdin`
 - `kubectl apply --server-side --kustomize kubernetes/flux/config`
