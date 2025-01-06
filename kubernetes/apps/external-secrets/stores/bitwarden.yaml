@@ -25,4 +25,4 @@ spec:
         type: Secret
         name: bitwarden-tls-certs
         namespace: external-secrets
-        key: ca.cert
+        key: ca.crt
