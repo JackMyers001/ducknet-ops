@@ -8,5 +8,6 @@ resources:
   - external-secrets.yaml
   - jetstack.yaml
   - metrics-server.yaml
+  - prometheus-community.yaml
   - rook-ceph.yaml
   - traefik.yaml
