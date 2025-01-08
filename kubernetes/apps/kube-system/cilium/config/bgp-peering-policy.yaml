@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://crds.jank.ing/cilium.io/ciliumbgpclusterconfig_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPClusterConfig
+metadata:
+  name: cilium-bgp
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/os: "linux"
+  bgpInstances:
+    - name: ducknet-cluster
+      localASN: 65402
+      peers:
+        - name: opnsense
+          peerASN: 65401
+          peerAddress: "10.4.20.1"
+          peerConfigRef:
+            name: cilium-peer
+---
+# yaml-language-server: $schema=https://crds.jank.ing/cilium.io/ciliumbgppeerconfig_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPPeerConfig
+metadata:
+  name: cilium-peer
+spec:
+  timers:
+    holdTimeSeconds: 90
+    keepAliveTimeSeconds: 30
+    connectRetryTimeSeconds: 120
+  gracefulRestart:
+    enabled: true
+    restartTimeSeconds: 15
+  families:
+    - afi: ipv4
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: bgp
+    - afi: ipv6
+      safi: unicast
+      advertisements:
+        matchLabels:
+          advertise: bgp
+---
+# yaml-language-server: $schema=https://crds.jank.ing/cilium.io/ciliumbgpadvertisement_v2alpha1.json
+apiVersion: cilium.io/v2alpha1
+kind: CiliumBGPAdvertisement
+metadata:
+  name: bgp-advertisements
+  labels:
+    advertise: bgp
+spec:
+  advertisements:
+    - advertisementType: Service
+      service:
+        addresses:
+          - LoadBalancerIP
+      selector:
+        matchExpressions:
+          - { key: somekey, operator: NotIn, values: ["never-used-value"] }

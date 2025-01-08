@@ -26,6 +26,9 @@ spec:
   values:
     # https://docs.cilium.io/en/stable/helm-reference/
 
+    bgpControlPlane:
+      enabled: true
+
     cgroup:
       autoMount:
         enabled: false
