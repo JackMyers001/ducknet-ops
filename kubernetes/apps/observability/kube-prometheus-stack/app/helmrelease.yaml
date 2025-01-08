@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: observability
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 67.8.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+values:
+  # https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+
+  cleanPrometheusOperatorObjectNames: true
+
+  crds:
+    enabled: false
+
+  alertmanager:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts: ["alertmanager.home.ducknet.fun"]
+      pathType: Prefix
+
+    alertmanagerSpec:
+      alertmanagerConfiguration:
+        name: alertmanager
+        global:
+          resolveTimeout: 5m
+
+      externalUrl: https://alertmanager.home.ducknet.fun
+
+      storage:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: ceph-block
+            resources:
+              requests:
+                storage: 1Gi
+
+  grafana:
+    defaultDashboardsTimezone: Australia/Perth
+
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts: ["grafana.home.ducknet.fun"]
+      pathType: Prefix
+
+  kubeProxy:
+    enabled: false
+
+  prometheus:
+    ingress:
+      enabled: true
+      ingressClassName: traefik
+      hosts: ["prometheus.home.ducknet.fun"]
+      pathType: Prefix
+
+    prometheusSpec:
+      retention: 14d
+      retentionSize: 50GB
+
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: ceph-block
+            resources:
+              requests:
+                storage: 50Gi
