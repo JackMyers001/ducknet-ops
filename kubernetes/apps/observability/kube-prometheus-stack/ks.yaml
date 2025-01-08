@@ -35,4 +35,3 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
     - name: rook-ceph-cluster
-      namespace: rook-ceph
