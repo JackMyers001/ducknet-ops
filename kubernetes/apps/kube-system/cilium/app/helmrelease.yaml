@@ -41,6 +41,9 @@ spec:
     k8sServicePort: 7445
     kubeProxyReplacement: true
 
+    operator:
+      replicas: 1
+
     securityContext:
       capabilities:
         ciliumAgent:
