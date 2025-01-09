@@ -16,4 +16,4 @@ spec:
   interval: 30m
   timeout: 5m
   dependsOn:
-    - name: snapshot-controller
+    - name: external-snapshotter-snapshot-controller
