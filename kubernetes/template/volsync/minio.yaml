@@ -1,0 +1,65 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: "${APP}-volsync-minio"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: bitwarden-secrets-manager
+
+  target:
+    name: "${APP}-volsync-minio-secret"
+
+    template:
+      engineVersion: v2
+      data:
+        RESTIC_REPOSITORY: "{{ .repo }}/${APP}"
+        RESTIC_PASSWORD: "{{ .RESTIC_PASSWORD }}"
+
+        AWS_ACCESS_KEY_ID: "{{ .resticPassword }}"
+        AWS_SECRET_ACCESS_KEY: "{{ .secretKey }}"
+
+  dataFrom:
+    - extract:
+        key: 2dc5018e-fcea-4279-9866-b26000f00c42
+    - extract:
+        key: b8b47c9f-3317-4a44-8da8-b26000ed69b9
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}-minio"
+spec:
+  sourcePVC: "${APP}"
+
+  trigger:
+    schedule: "0 */6 * * *" # Every 6 hours
+
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 14
+
+    repository: "${APP}-volsync-minio-secret"
+
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-ceph-blockpool}"
+
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:-ReadWriteOnce}"]
+
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
+
+    retain:
+      daily: 28
+      within: 7d
+
+    moverSecurityContext:
+      runAsNonRoot: true
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+      seccompProfile: { type: "RuntimeDefault" }
