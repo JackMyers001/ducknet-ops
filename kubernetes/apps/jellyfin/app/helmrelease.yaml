@@ -1,0 +1,116 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: docker.io/jellyfin/jellyfin
+              tag: 10.10.3.20241119-033930
+
+            env:
+              TZ: Australia/Perth
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+            resources:
+              requests:
+                cpu: "10m"
+                memory: "2Gi"
+              limits:
+                cpu: "3000m"
+                memory: "6Gi"
+
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8096
+
+    ingress:
+      main:
+        enabled: true
+        className: traefik
+        hosts:
+          - host: jellyfin.ducknet.fun
+            paths:
+              - path: /
+                service:
+                  identifier: main
+                  port: http
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: jellyfin
+        globalMounts:
+          - path: /config
+
+      anime:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media/anime
+        globalMounts:
+          - path: /anime
+            readOnly: true
+
+      movies:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media/movies
+        globalMounts:
+          - path: /movies
+            readOnly: true
+
+      shows:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media/shows
+        globalMounts:
+          - path: /shows
+            readOnly: true
+
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: "RuntimeDefault" }
