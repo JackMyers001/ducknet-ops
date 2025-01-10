@@ -39,10 +39,18 @@ spec:
               TZ: Australia/Perth
 
             probes:
-              liveness:
-                enabled: false
-              readiness:
-                enabled: false
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8096
+                  initialDelaySeconds: 0
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
               startup:
                 enabled: false
 
@@ -65,7 +73,7 @@ spec:
         type: ClusterIP
         ports:
           http:
-            port: 8096
+            port: *port
 
     ingress:
       app:
