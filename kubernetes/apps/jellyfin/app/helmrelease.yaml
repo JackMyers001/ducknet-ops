@@ -28,9 +28,9 @@ spec:
       namespace: rook-ceph
   values:
     controllers:
-      main:
+      jellyfin:
         containers:
-          main:
+          app:
             image:
               repository: docker.io/jellyfin/jellyfin
               tag: 10.10.3.20241119-033930
@@ -52,15 +52,15 @@ spec:
                 memory: "6Gi"
 
     service:
-      main:
-        controller: main
+      app:
+        controller: jellyfin
         type: ClusterIP
         ports:
           http:
             port: 8096
 
     ingress:
-      main:
+      app:
         enabled: true
         className: traefik
         hosts:
@@ -68,7 +68,7 @@ spec:
             paths:
               - path: /
                 service:
-                  identifier: main
+                  identifier: app
                   port: http
 
     persistence:
