@@ -23,6 +23,9 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
+  dependsOn:
+    - name: rook-ceph
+      namespace: rook-ceph
   values:
     # https://rook.io/docs/rook/latest-release/Helm-Charts/ceph-cluster-chart/#configuration
 
@@ -55,6 +58,8 @@ spec:
         allowMultiplePerNode: false
 
         modules:
+          - name: insights
+            enabled: true
           - name: pg_autoscaler
             enabled: true
           - name: rook
