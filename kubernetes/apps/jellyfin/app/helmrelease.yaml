@@ -61,7 +61,6 @@ spec:
 
     ingress:
       app:
-        enabled: true
         className: traefik
         hosts:
           - host: jellyfin.ducknet.fun
