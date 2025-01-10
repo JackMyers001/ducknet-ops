@@ -38,6 +38,14 @@ spec:
             env:
               TZ: Australia/Perth
 
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: false
+
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
