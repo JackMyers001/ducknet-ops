@@ -36,6 +36,7 @@ spec:
               tag: 10.10.3.20241119-033930
 
             env:
+              DOTNET_SYSTEM_IO_DISABLEFILELOCKING: "true"
               TZ: Australia/Perth
 
             probes:
@@ -70,7 +71,9 @@ spec:
     service:
       app:
         controller: jellyfin
-        type: ClusterIP
+        type: LoadBalancer
+        annotations:
+          lbipam.cilium.io/ips: 10.4.180.25
         ports:
           http:
             port: *port
