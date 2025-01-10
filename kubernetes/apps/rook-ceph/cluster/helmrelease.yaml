@@ -52,6 +52,10 @@ spec:
         count: 1
         allowMultiplePerNode: false
 
+        modules:
+          - name: rook
+            enabled: true
+
       dashboard:
         enabled: true
         ssl: false
