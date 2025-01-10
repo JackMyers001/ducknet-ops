@@ -39,11 +39,6 @@ spec:
         pathType: Prefix
 
       alertmanagerSpec:
-        alertmanagerConfiguration:
-          name: alertmanager
-          global:
-            resolveTimeout: 5m
-
         externalUrl: https://alertmanager.home.ducknet.fun
 
         storage:
