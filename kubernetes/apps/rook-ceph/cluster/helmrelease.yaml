@@ -55,6 +55,8 @@ spec:
         allowMultiplePerNode: false
 
         modules:
+          - name: pg_autoscaler
+            enabled: true
           - name: rook
             enabled: true
 
