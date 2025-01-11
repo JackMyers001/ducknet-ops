@@ -133,4 +133,5 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [4001, 4002, 4004]
         seccompProfile: { type: "RuntimeDefault" }
