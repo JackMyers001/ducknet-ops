@@ -128,7 +128,6 @@ spec:
           - path: /tmp
 
     defaultPodOptions:
-      enableServiceLinks: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
