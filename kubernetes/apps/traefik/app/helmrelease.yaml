@@ -32,6 +32,15 @@ spec:
         matchRule: Host(`traefik.home.ducknet.fun`)
         entryPoints: ["websecure"]
 
+    logs:
+      general:
+        format: json
+        level: DEBUG
+
+      access:
+        enabled: true
+        format: json
+
     metrics:
       prometheus:
         service:
