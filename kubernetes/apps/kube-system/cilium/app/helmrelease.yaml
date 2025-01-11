@@ -23,42 +23,6 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  values:
-    # https://docs.cilium.io/en/stable/helm-reference/
-
-    bgpControlPlane:
-      enabled: true
-
-    cgroup:
-      autoMount:
-        enabled: false
-      hostRoot: /sys/fs/cgroup
-
-    ipam:
-      mode: kubernetes
-
-    k8sServiceHost: localhost
-    k8sServicePort: 7445
-    kubeProxyReplacement: true
-
-    operator:
-      replicas: 1
-
-    securityContext:
-      capabilities:
-        ciliumAgent:
-          - CHOWN
-          - KILL
-          - NET_ADMIN
-          - NET_RAW
-          - IPC_LOCK
-          - SYS_ADMIN
-          - SYS_RESOURCE
-          - DAC_OVERRIDE
-          - FOWNER
-          - SETGID
-          - SETUID
-        cleanCiliumState:
-          - NET_ADMIN
-          - SYS_ADMIN
-          - SYS_RESOURCE
+  valuesFrom:
+    - kind: ConfigMap
+      name: cilium-helm-values
