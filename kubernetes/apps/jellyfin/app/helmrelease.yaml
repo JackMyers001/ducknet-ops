@@ -78,8 +78,6 @@ spec:
     ingress:
       app:
         className: traefik
-        annotations:
-          traefik.ingress.kubernetes.io/router.middlewares: jellyfin@kubernetescrd
         hosts:
           - host: jellyfin.ducknet.fun
             paths:
