@@ -86,6 +86,20 @@ spec:
                   identifier: app
                   port: http
 
+      tailscale:
+        className: tailscale
+        hosts:
+          - host: &tsHost jellyfin.daggertooth-galaxy.ts.net
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *tsHost
+            secretName: jellyfin.daggertooth-galaxy.ts.net-tls
+
     persistence:
       config:
         enabled: true
