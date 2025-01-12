@@ -60,7 +60,9 @@ spec:
       ingress:
         enabled: true
         ingressClassName: traefik
-        hosts: ["grafana.home.ducknet.fun"]
+        hosts:
+          - grafana.ducknet.fun
+          - grafana.home.ducknet.fun
         pathType: Prefix
 
     kubeProxy:
