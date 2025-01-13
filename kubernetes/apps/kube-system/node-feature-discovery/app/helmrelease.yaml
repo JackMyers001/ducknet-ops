@@ -31,4 +31,4 @@ spec:
     worker:
       config:
         core:
-          labelSources: ["pci", "system", "usb"]
+          labelSources: ["custom", "pci", "system", "usb"]
