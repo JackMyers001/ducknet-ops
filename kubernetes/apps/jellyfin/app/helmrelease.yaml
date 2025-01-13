@@ -24,6 +24,8 @@ spec:
       strategy: rollback
       retries: 3
   dependsOn:
+    - name: nvidia-device-plugin
+      namespace: kube-system
     - name: rook-ceph-cluster
       namespace: rook-ceph
   values:
@@ -67,6 +69,7 @@ spec:
               limits:
                 cpu: "3000m"
                 memory: "6Gi"
+                nvidia.com/gpu: 1
 
     service:
       app:
@@ -145,3 +148,8 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups: [4001, 4002, 4004]
         seccompProfile: { type: "RuntimeDefault" }
+
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
