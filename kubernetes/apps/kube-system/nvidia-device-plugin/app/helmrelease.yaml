@@ -37,3 +37,5 @@ spec:
     nfd:
       enabled: false
       enableNodeFeatureApi: true
+
+    runtimeClassName: nvidia
