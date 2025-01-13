@@ -36,3 +36,4 @@ spec:
     # Disable automatic installation of node-feature-discovery
     nfd:
       enabled: false
+      enableNodeFeatureApi: true
