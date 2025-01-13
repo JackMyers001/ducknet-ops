@@ -9,6 +9,7 @@ resources:
   - external-secrets.yaml
   - jetstack.yaml
   - metrics-server.yaml
+  - node-feature-discovery.yaml
   - prometheus-community.yaml
   - rook-ceph.yaml
   - tailscale.yaml
