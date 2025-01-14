@@ -1,0 +1,16 @@
+---
+apiVersion: tailscale.com/v1alpha1
+kind: Connector
+metadata:
+  name: &name ts-home
+spec:
+  hostname: *name
+
+  exitNode: true
+
+  subnetRouter:
+    advertiseRoutes:
+      - 10.4.10.0/24
+      - 10.4.20.0/24
+      - 10.4.255.0/24
+      - 192.168.178.0/23
