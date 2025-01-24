@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: "${APP}-volsync-r2"
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: bitwarden-secrets-manager
+
+  target:
+    name: "${APP}-volsync-r2-secret"
+
+    template:
+      engineVersion: v2
+      data:
+        RESTIC_REPOSITORY: "{{ .repo }}/${APP}"
+        RESTIC_PASSWORD: "{{ .resticPassword }}"
+
+        AWS_ACCESS_KEY_ID: "{{ .accessKey }}"
+        AWS_SECRET_ACCESS_KEY: "{{ .secretKey }}"
+
+  dataFrom:
+    - extract:
+        key: ffa959bf-d384-446d-937d-b26f0094066d
+    - extract:
+        key: 2f7fa054-27df-4488-8b9c-b26f00954b59
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}-r2"
+spec:
+  sourcePVC: "${APP}"
+
+  trigger:
+    schedule: "0 */6 * * *" # Every 6 hours
+
+  restic:
+    copyMethod: Snapshot
+    pruneIntervalDays: 14
+
+    repository: "${APP}-volsync-r2-secret"
+
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-ceph-block}"
+
+    accessModes: ["${VOLSYNC_SNAP_ACCESSMODES:-ReadWriteOnce}"]
+
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
+
+    retain:
+      daily: 28
+      within: 7d
+
+    moverSecurityContext:
+      runAsNonRoot: true
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+      seccompProfile: { type: "RuntimeDefault" }
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-dst"
+  labels:
+    kustomize.toolkit.fluxcd.io/ssa: IfNotPresent
+spec:
+  trigger:
+    manual: restore-once
+
+  restic:
+    copyMethod: Snapshot
+
+    repository: "${APP}-volsync-r2-secret"
+
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-ceph-block}"
+
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-2Gi}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-ceph-block}"
+
+    capacity: "${VOLSYNC_CAPACITY:-5Gi}"
+
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+      seccompProfile: { type: "RuntimeDefault" }
