@@ -23,7 +23,7 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-values:
-  # Enable Kubernetes API access via Tailscale, but use Omni for auth
-  apiServerProxyConfig:
-    mode: noauth
+  values:
+    # Enable Kubernetes API access via Tailscale, but use Omni for auth
+    apiServerProxyConfig:
+      mode: noauth
