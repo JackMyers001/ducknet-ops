@@ -11,6 +11,7 @@ resources:
   - metrics-server.yaml
   - node-feature-discovery.yaml
   - nvidia-device-plugin.yaml
+  - openebs.yaml
   - prometheus-community.yaml
   - rook-ceph.yaml
   - tailscale.yaml
