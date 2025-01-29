@@ -108,7 +108,6 @@ spec:
         path: /mnt/coeus-pool/media/movies
         globalMounts:
           - path: /movies
-            readOnly: true
 
       tmp:
         type: emptyDir
