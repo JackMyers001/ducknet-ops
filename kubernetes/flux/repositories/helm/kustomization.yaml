@@ -15,5 +15,6 @@ resources:
   - openebs.yaml
   - prometheus-community.yaml
   - rook-ceph.yaml
+  - stakater.yaml
   - tailscale.yaml
   - traefik.yaml
