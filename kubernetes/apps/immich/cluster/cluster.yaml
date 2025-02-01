@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-postgres16
+spec:
+  # Immich currently requires pgvecto.rs 0.2.0 <= x < 0.4.0 . See https://immich.app/docs/administration/postgres-standalone/#prerequisites
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0@sha256:be3f025d79aa1b747817f478e07e71be43236e14d00d8a9eb3914146245035ba
+
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+
+  # Give immich superuser access to the database, as suggested by the docs (https://immich.app/docs/administration/postgres-standalone/#with-superuser-permission)
+  managed:
+    roles:
+      - name: immich
+        superuser: true
+        login: true
+
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+
+      secret:
+        name: immich-postgres-user-secret
+
+      postInitSQL:
+        - CREATE EXTENSION IF NOT EXISTS vectors;
+        - CREATE EXTENSION IF NOT EXISTS cube CASCADE;
+        - CREATE EXTENSION IF NOT EXISTS earthdistance CASCADE;
+
+  instances: 1
+
+  monitoring:
+    enablePodMonitor: true
+
+  storage:
+    size: 20Gi
+    storageClass: openebs-hostpath
