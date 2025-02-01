@@ -33,6 +33,9 @@ spec:
       DB_HOSTNAME: immich-postgres16-rw.immich.svc.cluster.local
       DB_DATABASE_NAME: immich
 
+      DB_USERNAME: ""
+      DB_PASSWORD: ""
+
     envFrom:
       - secretRef:
           name: immich-postgres-user-secret
