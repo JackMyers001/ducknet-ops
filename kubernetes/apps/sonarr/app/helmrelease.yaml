@@ -109,13 +109,6 @@ spec:
         globalMounts:
           - path: /media
 
-      shows:
-        type: nfs
-        server: "10.4.20.10"
-        path: /mnt/coeus-pool/media/shows
-        globalMounts:
-          - path: /shows
-
       tmp:
         type: emptyDir
         globalMounts:
