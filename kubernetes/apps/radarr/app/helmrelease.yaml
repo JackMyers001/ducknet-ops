@@ -102,6 +102,13 @@ spec:
         globalMounts:
           - path: /config
 
+      media:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media
+        globalMounts:
+          - path: /media
+
       movies:
         type: nfs
         server: "10.4.20.10"
@@ -121,5 +128,5 @@ spec:
         runAsGroup: 568
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [4001]
+        supplementalGroups: [4001, 4011]
         seccompProfile: { type: "RuntimeDefault" }
