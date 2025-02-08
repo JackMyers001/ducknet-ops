@@ -1,0 +1,132 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarr
+  namespace: sonarr
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+  values:
+    controllers:
+      sonarr:
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom: &envFrom
+              - secretRef:
+                  name: sonarr-secret
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/sonarr
+              tag: 4.0.12.2823@sha256:55c6878a5367fc2398d15c9a16a70653f5e5f42c9fe9b708a038f2781fb0360f
+
+            env:
+              SONARR__SERVER__PORT: &port 80
+
+              TZ: Australia/Perth
+
+            envFrom: *envFrom
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+    service:
+      app:
+        controller: sonarr
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      app:
+        className: traefik
+        hosts:
+          - host: sonarr.home.ducknet.fun
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      config:
+        existingClaim: sonarr
+        globalMounts:
+          - path: /config
+
+      media:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media
+        globalMounts:
+          - path: /media
+
+      shows:
+        type: nfs
+        server: "10.4.20.10"
+        path: /mnt/coeus-pool/media/shows
+        globalMounts:
+          - path: /shows
+
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [4002, 4011]
+        seccompProfile: { type: "RuntimeDefault" }
