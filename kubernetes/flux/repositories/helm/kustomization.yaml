@@ -6,10 +6,10 @@ resources:
   - backube.yaml
   - bjw-s.yaml
   - cilium.yaml
+  - cnpg.yaml
   - external-secrets.yaml
   - immich.yaml
   - jetstack.yaml
-  - cnpg.yaml
   - metrics-server.yaml
   - node-feature-discovery.yaml
   - nvidia-device-plugin.yaml
