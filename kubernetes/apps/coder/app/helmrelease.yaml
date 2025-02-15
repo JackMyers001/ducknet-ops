@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: coder
+  namespace: coder
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: coder
+      version: 2.19.0
+      sourceRef:
+        kind: HelmRepository
+        name: coder
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    coder:
+      env:
+        - name: CODER_ACCESS_URL
+          value: https://coder.home.ducknet.fun
+
+      envFrom: &envFrom
+        - secretRef:
+            name: coder-secret
+
+      initContainers:
+        - name: init-db
+          image: ghcr.io/onedr0p/postgres-init:16
+          envFrom: *envFrom
+
+      ingress:
+        enabled: true
+        className: traefik
+        host: coder.home.ducknet.fun
