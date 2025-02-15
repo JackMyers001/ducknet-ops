@@ -39,6 +39,6 @@ spec:
           envFrom: *envFrom
 
       ingress:
-        enabled: true
+        enable: true
         className: traefik
         host: coder.home.ducknet.fun
