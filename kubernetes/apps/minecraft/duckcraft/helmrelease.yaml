@@ -54,6 +54,10 @@ spec:
 
       memory: 8192M
 
+      modrinth:
+        projects:
+          - luckperms:v5.4.145-bukkit
+
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: mc.home.ducknet.fun
 
