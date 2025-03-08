@@ -10,6 +10,7 @@ resources:
   - coder.yaml
   - external-secrets.yaml
   - immich.yaml
+  - itzg.yaml
   - jetstack.yaml
   - metrics-server.yaml
   - node-feature-discovery.yaml
