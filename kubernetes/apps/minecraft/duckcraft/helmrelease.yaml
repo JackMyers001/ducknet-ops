@@ -32,6 +32,7 @@ spec:
 
     resources:
       requests:
+        cpu: 2000m
         memory: 8Gi
 
     # StatefulSet to allow server to be stopped
