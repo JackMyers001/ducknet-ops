@@ -57,6 +57,7 @@ spec:
       modrinth:
         projects:
           - luckperms:v5.4.145-bukkit
+          - tab-was-taken:5.0.7
 
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: mc.home.ducknet.fun
