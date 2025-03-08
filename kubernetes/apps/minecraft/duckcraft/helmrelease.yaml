@@ -43,6 +43,7 @@ spec:
 
     extraEnv:
       PAPER_BUILD: 194
+      TZ: Australia/Perth
 
     minecraftServer:
       eula: true
