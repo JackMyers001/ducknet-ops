@@ -1,0 +1,58 @@
+# NOTE: Taken from https://github.com/itzg/mc-router/blob/master/docs/k8s-autoscale.yaml
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mc-shutdown
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: mc-shutdown
+spec:
+  schedule: "*/5 * * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: mc-shutdown
+          restartPolicy: OnFailure
+          containers:
+            - name: shutdown
+              image: bitnami/kubectl:latest
+              imagePullPolicy: IfNotPresent
+              command:
+                - /bin/bash
+                - -c
+                - source shutdown-script.sh
+              volumeMounts:
+                - name: shutdown-script
+                  mountPath: /shutdown-script.sh
+                  subPath: shutdown-script.sh
+                  readOnly: true
+          volumes:
+            - name: shutdown-script
+              configMap:
+                name: shutdown-script
+                items:
+                  - key: shutdown-script.sh
+                    path: shutdown-script.sh
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shutdown-script
+data:
+  shutdown-script.sh: |
+    #!/bin/bash
+    MC_PODS=$(kubectl get pods -l containertype=minecraft-server -o=jsonpath="{range .items[*]}{.metadata.name},"| sed 's/,/\n/g')
+    for p in $MC_PODS; do
+      echo "found minecraft pod $p, sleeping 120 seconds to prevent shutdown before login"
+      sleep 120
+      deployment=$(echo $p |sed 's/-0//g')
+      # check online player count in the mc server
+      if [[ $(kubectl exec -i $p -- /usr/local/bin/mc-monitor status) == *"online=0"* ]] ;then
+        kubectl scale statefulset $deployment --replicas=0
+      fi
+    done

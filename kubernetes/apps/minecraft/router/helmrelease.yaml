@@ -27,6 +27,9 @@ spec:
     # https://github.com/itzg/minecraft-server-charts/blob/master/charts/mc-router/values.yaml
 
     minecraftRouter:
+      autoScaleUp:
+        enabled: true
+
       connectionRateLimit: 2
 
     services:

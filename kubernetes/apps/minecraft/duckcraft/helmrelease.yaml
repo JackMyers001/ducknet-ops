@@ -30,6 +30,13 @@ spec:
       requests:
         memory: 8Gi
 
+    # StatefulSet to allow server to be stopped
+    workloadAsStatefulSet: true
+    strategyType: OnDelete
+
+    podLabels:
+      containertype: minecraft-server
+
     extraEnv:
       PAPER_BUILD: 194
 
