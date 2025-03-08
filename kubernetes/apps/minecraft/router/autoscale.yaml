@@ -5,6 +5,34 @@ kind: ServiceAccount
 metadata:
   name: mc-shutdown
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: mc-shutdown
+rules:
+  - apiGroups: ["apps"]
+    resources: ["statefulsets", "statefulsets/scale"]
+    verbs: ["list", "get", "update", "patch"]
+  - apiGroups: [""]
+    resources: ["pods", "pods/log"]
+    verbs: ["get", "list"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: mc-shutdown
+subjects:
+  - kind: ServiceAccount
+    name: mc-shutdown
+    namespace: minecraft
+roleRef:
+  kind: ClusterRole
+  name: mc-shutdown
+  apiGroup: "rbac.authorization.k8s.io"
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
