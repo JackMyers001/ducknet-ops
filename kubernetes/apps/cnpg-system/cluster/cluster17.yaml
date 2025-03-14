@@ -31,7 +31,7 @@ spec:
         maxParallel: 8
 
       destinationPath: s3://ducknet-k8s-postgres/
-      endpointURL: 10.4.10.11:9000
+      endpointURL: https://coeus.management.killaloe.ducknet.fun:9000
 
       serverName: postgres17-v01
 
