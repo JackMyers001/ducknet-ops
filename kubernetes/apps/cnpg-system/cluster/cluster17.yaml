@@ -31,16 +31,16 @@ spec:
         maxParallel: 8
 
       destinationPath: s3://ducknet-k8s-postgres/
-      endpointURL: ${CLOUDFLARE_R2_ENDPOINT}
+      endpointURL: 10.4.10.11:9000
 
       serverName: postgres17-v01
 
       s3Credentials:
         accessKeyId:
-          name: &r2SecretName cnpg-r2-backup-secret
+          name: &s3SecretName cnpg-minio-backup-secret
           key: AWS_ACCESS_KEY_ID
         secretAccessKey:
-          name: *r2SecretName
+          name: *s3SecretName
           key: AWS_SECRET_ACCESS_KEY
 
     retentionPolicy: 30d
