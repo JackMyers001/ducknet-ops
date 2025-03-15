@@ -5,7 +5,7 @@ kind: ScheduledBackup
 metadata:
   name: postgres
 spec:
-  schedule: "0 */6 * * *" # Every 6 hours
+  schedule: "0 0 */6 * * *" # Every 6 hours
   immediate: true
   backupOwnerReference: self
   cluster:
