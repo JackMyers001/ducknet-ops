@@ -2,6 +2,16 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
+      description: "Flux Group",
+      groupName: "Flux",
+      matchPackagePatterns: [
+        "fluxcd"
+      ],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
       description: "Rook Ceph Group",
       groupName: "Rook Ceph",
       matchDatasources: [
