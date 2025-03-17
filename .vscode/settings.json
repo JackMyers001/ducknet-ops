@@ -1,5 +1,9 @@
 {
     "yaml.keyOrdering": false,
+    "[json5]": {
+        "editor.defaultFormatter": "BlueGlassBlock.better-json5",
+        "editor.formatOnSave": true,
+    },
     "[yaml]": {
         "editor.detectIndentation": false,
         "editor.defaultFormatter": "redhat.vscode-yaml",
