@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: public.ecr.aws/docker/library/alpine
-              tag: 3.21.0
+              tag: 3.21.3
 
             command: ["/bin/sh", "-c"]
             args:
