@@ -86,12 +86,3 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /tmp
-
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        seccompProfile: { type: "RuntimeDefault" }
