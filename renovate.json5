@@ -2,6 +2,7 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
     "config:recommended",
+    "github>jackmyers001/ducknet-ops//.renovate/autoMerge.json5",
     "github>jackmyers001/ducknet-ops//.renovate/groups.json5",
     ":disableRateLimiting",
     ":timezone(Australia/Perth)",

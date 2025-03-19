@@ -1,0 +1,21 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Automerge kube-prometheus-stack",
+      automerge: true,
+      automergeStrategy: "rebase",
+      automergeType: "pr",
+      matchDatasources: [
+        "helm",
+      ],
+      matchPackageNames: [
+        "kube-prometheus-stack"
+      ],
+      matchUpdateTypes: [
+        "minor",
+        "patch"
+      ],
+    }
+  ],
+}
