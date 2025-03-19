@@ -16,6 +16,9 @@
         "minor",
         "patch"
       ],
+      // HACK: we don't currently have any GitHub PR tests, so ignore the lack
+      // of tests allow GitHub/Renovate to auto-merge the PR
+      ignoreTests: true,
     }
   ],
 }
