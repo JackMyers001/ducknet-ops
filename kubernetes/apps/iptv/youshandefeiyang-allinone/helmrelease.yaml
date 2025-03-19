@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: youshandefeiyang-allinone
+  namespace: iptv
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.7.3
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      allinone:
+        containers:
+          app:
+            image:
+              repository: youshandefeiyang/allinone
+              tag: latest@sha256:c1cf4733b32aad8c1f82f4aa177b22ceb191ed73b5f6832e2b55d9a04601b7cd
+
+            command: -tv=true -aesKey=${YOUSHANDEFEIYANG_ALLINONE_AESKEY} -userid=${YOUSHANDEFEIYANG_ALLINONE_USERID} -token=${YOUSHANDEFEIYANG_ALLINONE_TOKEN}
+
+            probes:
+              liveness: &probes
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /tv.m3u
+                    port: &port 35455
+                  initialDelaySeconds: 10
+                  periodSeconds: 10
+                  timeoutSeconds: 1
+                  failureThreshold: 3
+              readiness: *probes
+              startup:
+                enabled: false
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+            resources:
+              requests:
+                memory: 50Mi
+
+    service:
+      app:
+        controller: allinone
+        ports:
+          http:
+            port: *port
+
+    ingress:
+      app:
+        className: traefik
+        hosts:
+          - host: china.iptv.home.ducknet.fun
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+    persistence:
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: "RuntimeDefault" }
