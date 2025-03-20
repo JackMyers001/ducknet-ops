@@ -81,7 +81,7 @@ spec:
       app:
         className: traefik
         hosts:
-          - host: china.iptv.home.ducknet.fun
+          - host: china-iptv.home.ducknet.fun
             paths:
               - path: /
                 service:
