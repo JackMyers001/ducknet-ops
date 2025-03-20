@@ -26,6 +26,20 @@ spec:
   values:
     controllers:
       allinone:
+        # The `allinone` binary checks for the existence of `/.dockerenv` to "ensure" it's running
+        # in a container
+        initContainers:
+          create-dockerenv:
+            image:
+              repository: busybox
+              tag: 1.37.0
+            command: ["touch", "/.dockerenv"]
+            securityContext:
+              runAsNonRoot: false
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+
         containers:
           app:
             image:
