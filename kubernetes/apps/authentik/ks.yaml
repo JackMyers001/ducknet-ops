@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: authentik-cluster
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/authentik/cluster
+  targetNamespace: authentik
+  sourceRef:
+    kind: GitRepository
+    name: ducknet-ops
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: authentik
+  namespace: flux-system
+spec:
+  path: ./kubernetes/apps/authentik/app
+  targetNamespace: authentik
+  sourceRef:
+    kind: GitRepository
+    name: ducknet-ops
+  prune: true
+  wait: false
+  interval: 30m
+  timeout: 5m
+  dependsOn:
+    - name: authentik-cluster
