@@ -39,6 +39,7 @@ spec:
 
             env:
               PLEX_ADVERTISE_URL: http://plex.ducknet.fun:443
+              PLEX_NO_AUTH_NETWORKS: 192.168.178.0/23
               TZ: Australia/Perth
 
             probes:
