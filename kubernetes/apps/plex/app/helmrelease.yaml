@@ -93,6 +93,8 @@ spec:
     persistence:
       config:
         existingClaim: plex
+        globalMounts:
+          - path: /config
 
       config-cache:
         existingClaim: plex-cache
