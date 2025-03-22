@@ -11,6 +11,7 @@ cgroup:
 
 gatewayAPI:
   enabled: true
+  enableAlpn: true
 
 ipam:
   mode: kubernetes
