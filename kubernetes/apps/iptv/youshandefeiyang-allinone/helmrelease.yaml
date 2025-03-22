@@ -37,7 +37,7 @@ spec:
           app:
             image:
               repository: youshandefeiyang/allinone
-              tag: latest@sha256:c1cf4733b32aad8c1f82f4aa177b22ceb191ed73b5f6832e2b55d9a04601b7cd
+              tag: latest@sha256:e2d7386cd089ad741c16a3736157ca68aed47c019db1fbcaf6c8fbaa4b55f5cf
 
             args:
               - -tv=true
