@@ -52,7 +52,7 @@ spec:
         controller: threadfin
         ports:
           http:
-            port: 34400
+            port: &port 34400
 
     route:
       app:
