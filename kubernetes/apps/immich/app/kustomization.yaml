@@ -5,3 +5,6 @@ kind: Kustomization
 resources:
   - ./pvc.yaml
   - ./helmrelease.yaml
+  # FIXME: we only need to manually create an HTTPRoute until
+  # https://github.com/immich-app/immich-charts/issues/165 is resolved
+  - ./httproute.yaml

@@ -54,16 +54,6 @@ spec:
     redis:
       enabled: true
 
-    server:
-      ingress:
-        main:
-          enabled: true
-
-          hosts:
-            - host: immich.ducknet.fun
-              paths:
-                - path: /
-
     machine-learning:
       persistence:
         # Stores ML models
