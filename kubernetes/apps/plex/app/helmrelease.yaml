@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: plex
+  name: &app plex
   namespace: plex
 spec:
   interval: 30m
@@ -83,16 +83,18 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        className: traefik
-        hosts:
-          - host: plex.ducknet.fun
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - plex.ducknet.fun
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
