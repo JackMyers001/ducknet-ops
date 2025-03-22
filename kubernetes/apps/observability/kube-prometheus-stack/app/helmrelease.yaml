@@ -37,11 +37,15 @@ spec:
       enabled: false
 
     alertmanager:
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts: ["alertmanager.home.ducknet.fun"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - alertmanager.home.ducknet.fun
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
 
       alertmanagerSpec:
         externalUrl: https://alertmanager.home.ducknet.fun
@@ -69,11 +73,15 @@ spec:
       enabled: false
 
     prometheus:
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts: ["prometheus.home.ducknet.fun"]
-        pathType: Prefix
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - prometheus.home.ducknet.fun
+          parentRefs:
+            - name: internal
+              namespace: kube-system
+              sectionName: https
 
       prometheusSpec:
         retention: 14d
