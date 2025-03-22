@@ -9,7 +9,6 @@ resources:
   - cilium.yaml
   - cnpg.yaml
   - coder.yaml
-  - external-secrets.yaml
   - immich.yaml
   - jetstack.yaml
   - metrics-server.yaml
