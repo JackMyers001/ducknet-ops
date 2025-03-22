@@ -29,13 +29,6 @@ spec:
   values:
     # https://rook.io/docs/rook/latest-release/Helm-Charts/ceph-cluster-chart/#configuration
 
-    ingress:
-      dashboard:
-        ingressClassName: traefik
-        host:
-          name: rook.home.ducknet.fun
-          path: /
-
     monitoring:
       enabled: true
       createPrometheusRules: true
