@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: threadfin
+  name: &app threadfin
   namespace: iptv
 spec:
   interval: 30m
@@ -54,16 +54,18 @@ spec:
           http:
             port: 34400
 
-    ingress:
+    route:
       app:
-        className: traefik
-        hosts:
-          - host: threadfin.home.ducknet.fun
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - threadfin.home.ducknet.fun
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
