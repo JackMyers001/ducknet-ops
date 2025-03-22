@@ -61,14 +61,6 @@ spec:
     grafana:
       defaultDashboardsTimezone: Australia/Perth
 
-      ingress:
-        enabled: true
-        ingressClassName: traefik
-        hosts:
-          - grafana.ducknet.fun
-          - grafana.home.ducknet.fun
-        pathType: Prefix
-
     kubeProxy:
       enabled: false
 
