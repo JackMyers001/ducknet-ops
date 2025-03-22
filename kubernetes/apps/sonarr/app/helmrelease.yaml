@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: sonarr
+  name: &app sonarr
   namespace: sonarr
 spec:
   interval: 30m
@@ -85,16 +85,18 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        className: traefik
-        hosts:
-          - host: sonarr.home.ducknet.fun
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - sonarr.home.ducknet.fun
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       config:
