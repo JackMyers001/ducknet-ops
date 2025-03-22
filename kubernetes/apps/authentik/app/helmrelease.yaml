@@ -50,10 +50,3 @@ spec:
 
     redis:
       enabled: true
-
-    server:
-      ingress:
-        ingressClassName: traefik
-        enabled: true
-        hosts:
-          - authentik.ducknet.fun
