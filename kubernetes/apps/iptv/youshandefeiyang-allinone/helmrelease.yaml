@@ -10,7 +10,7 @@ data:
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: youshandefeiyang-allinone
+  name: &app youshandefeiyang-allinone
   namespace: iptv
 spec:
   interval: 30m
@@ -77,16 +77,18 @@ spec:
           http:
             port: *port
 
-    ingress:
+    route:
       app:
-        className: traefik
-        hosts:
-          - host: china-iptv.home.ducknet.fun
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - china-iptv.home.ducknet.fun
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       # The `allinone` binary checks for the existence of `/.dockerenv` to "ensure" it's running in
