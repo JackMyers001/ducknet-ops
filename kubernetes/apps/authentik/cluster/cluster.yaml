@@ -22,3 +22,27 @@ spec:
   storage:
     size: 5Gi
     storageClass: openebs-hostpath
+
+  backup:
+    barmanObjectStore:
+      data:
+        compression: bzip2
+
+      wal:
+        compression: bzip2
+        maxParallel: 8
+
+      destinationPath: s3://ducknet-k8s-postgres/
+      endpointURL: ${CLOUDFLARE_R2_ENDPOINT}
+
+      serverName: authentik-pg17-v01
+
+      s3Credentials:
+        accessKeyId:
+          name: &r2SecretName cnpg-r2-backup-secret
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: *r2SecretName
+          key: AWS_SECRET_ACCESS_KEY
+
+    retentionPolicy: 14d
