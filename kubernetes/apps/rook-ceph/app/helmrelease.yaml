@@ -35,6 +35,11 @@ spec:
   values:
     # https://rook.io/docs/rook/latest-release/Helm-Charts/operator-chart/#configuration
 
+    csi:
+      enableLiveness: true
+      serviceMonitor:
+        enabled: true
+
     enableDiscoveryDaemon: true
 
     monitoring:
