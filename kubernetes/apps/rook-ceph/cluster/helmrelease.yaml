@@ -102,6 +102,12 @@ spec:
           mountOptions: ["discard"]
 
           parameters:
+            # As much as I'd like to use zstd, the Ceph docs say that it is "*not* recommended for
+            # BlueStore due to high CPU overhead when compressing small amounts of data"
+            # https://docs.ceph.com/en/reef/rados/configuration/bluestore-config-ref/#confval-bluestore_compression_algorithm
+            compression_algorithm: "lz4"
+            compression_mode: "aggressive"
+
             # RBD image format
             imageFormat: "2"
 
