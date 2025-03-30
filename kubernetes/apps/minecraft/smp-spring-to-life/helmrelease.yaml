@@ -1,0 +1,88 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mc-smp-spring-to-life
+  namespace: minecraft
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: itzg-minecraft
+    namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    # https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml
+
+    image:
+      repository: itzg/minecraft-server
+      tag: java21-graalvm@sha256:3b3f07549d1efb1928bea1d6006603bb5e4c0f9a59520af9323c13ce41c9738a
+
+    resources:
+      requests:
+        cpu: 4000m
+        memory: 10Gi
+
+    nodeSelector:
+      kubernetes.io/hostname: talos-bd795i-01
+
+    extraEnv:
+      FABRIC_LAUNCHER_VERSION: 1.0.3
+      FABRIC_LOADER_VERSION: 0.16.10
+      TZ: Australia/Perth
+
+    minecraftServer:
+      eula: true
+      version: 1.21.5
+      type: FABRIC
+
+      difficulty: hard
+      ops: duckworld
+      maxPlayers: 20
+      gameMode: survival
+      motd: duckworld's cool SMP
+
+      memory: 10240M
+
+      modrinth:
+        projects:
+          # Core
+          - fabric-api:0.119.6+1.21.5
+
+          # Optimization
+          - c2me-fabric:0.3.2+alpha.0.66+1.21.5
+          - ferrite-core:8.0.0-fabric
+          - krypton:0.2.9
+          - lithium:mc1.21.5-0.16.0-fabric
+          # https://modrinth.com/mod/modernfix
+          - scalablelux:0.1.3+beta.1+fabric.4039a8d
+          # https://modrinth.com/mod/vmp-fabric ??
+
+          # Moderation
+          - luckperms:v5.4.158-fabric
+
+          # Bug fixes
+          # - https://modrinth.com/plugin/crashexploitfixer
+
+          # Anticheat
+          - anti-xray:1.4.9+1.21.5
+
+          # Misc
+          - sessility:0.7.1
+          - spark:1.10.128-fabric
+
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: smp.minecraft.ducknet.fun
+
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: *app
