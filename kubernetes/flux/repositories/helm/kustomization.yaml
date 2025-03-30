@@ -8,6 +8,7 @@ resources:
   - cilium.yaml
   - cnpg.yaml
   - coder.yaml
+  - descheduler.yaml
   - jetstack.yaml
   - metrics-server.yaml
   - node-feature-discovery.yaml
