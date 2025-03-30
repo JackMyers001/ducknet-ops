@@ -45,7 +45,6 @@ spec:
       type: FABRIC
 
       difficulty: hard
-      ops: duckworld
       maxPlayers: 20
       gameMode: survival
       motd: duckworld's cool SMP
