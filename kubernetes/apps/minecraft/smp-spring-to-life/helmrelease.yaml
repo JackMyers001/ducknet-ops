@@ -79,6 +79,10 @@ spec:
           - sessility:0.7.1
           - spark:1.10.128-fabric
 
+      rcon:
+        enabled: true
+        withGeneratedPassword: true
+
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: smp.minecraft.ducknet.fun
 
