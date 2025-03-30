@@ -67,6 +67,7 @@ spec:
 
           # Moderation
           - luckperms:v5.4.158-fabric
+          - vanilla-permissions:0.2.5+1.21.5-rc1
 
           # Bug fixes
           # - https://modrinth.com/plugin/crashexploitfixer
