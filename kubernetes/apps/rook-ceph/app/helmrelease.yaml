@@ -36,6 +36,8 @@ spec:
     # https://rook.io/docs/rook/latest-release/Helm-Charts/operator-chart/#configuration
 
     csi:
+      enableCephfsDriver: false
+      enableCephfsSnapshotter: false
       enableLiveness: true
       serviceMonitor:
         enabled: true
