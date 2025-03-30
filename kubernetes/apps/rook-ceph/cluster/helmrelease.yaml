@@ -42,15 +42,15 @@ spec:
       enabled: true
       createPrometheusRules: true
 
-    configOverride: |
-      [global]
-      bdev_enable_discard = true
-      bdev_async_discard = true
-      osd_class_update_on_start = false
-      osd_pool_default_size = 1
-      mon_warn_on_pool_no_redundancy = false
-
     cephClusterSpec:
+      cephConfig:
+        global:
+          bdev_enable_discard: "true"
+          bdev_async_discard: "true"
+          osd_class_update_on_start: "false"
+          osd_pool_default_size: "1"
+          mon_warn_on_pool_no_redundancy: "false"
+
       mon:
         count: 1
         allowMultiplePerNode: false
