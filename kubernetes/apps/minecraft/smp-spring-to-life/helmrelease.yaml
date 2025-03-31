@@ -81,6 +81,10 @@ spec:
           - sessility:0.7.1
           - spark:1.10.128-fabric
 
+      vanillaTweaksShareCodes:
+        - CiZ8VC # Track Statistics v1.1.12
+        - 74zhfL # Track Raw Statistics v1.7.6
+
       rcon:
         enabled: true
         withGeneratedPassword: true
