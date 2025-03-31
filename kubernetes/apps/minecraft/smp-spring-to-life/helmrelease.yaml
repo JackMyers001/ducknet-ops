@@ -58,7 +58,7 @@ spec:
           - fabric-api:0.119.6+1.21.5
 
           # Optimization
-          - c2me-fabric:0.3.2+alpha.0.66+1.21.5
+          - c2me-fabric:0.3.2+beta.1.0+1.21.5
           - ferrite-core:8.0.0-fabric
           - krypton:0.2.9
           - lithium:mc1.21.5-0.16.0-fabric
