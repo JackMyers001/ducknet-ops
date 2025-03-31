@@ -103,3 +103,7 @@ spec:
             readOnly: true
             mountPath: /data/config/antixray.toml
             subPath: antixray.toml
+          - name: *fabricModConfig
+            readOnly: true
+            mountPath: /data/config/sessility.properties
+            subPath: sessility.properties

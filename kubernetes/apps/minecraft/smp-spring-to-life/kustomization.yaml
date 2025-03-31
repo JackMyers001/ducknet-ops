@@ -9,5 +9,6 @@ configMapGenerator:
   - name: fabric-mod-config-configmap
     files:
       - antixray.toml=./resources/config/antixray.toml
+      - sessility.properties=./resources/config/sessility.properties
 generatorOptions:
   disableNameSuffixHash: true
