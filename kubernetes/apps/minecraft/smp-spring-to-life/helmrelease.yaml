@@ -35,6 +35,7 @@ spec:
       kubernetes.io/hostname: talos-bd795i-01
 
     extraEnv:
+      USE_AIKAR_FLAGS: true
       FABRIC_LAUNCHER_VERSION: 1.0.3
       FABRIC_LOADER_VERSION: 0.16.10
       TZ: Australia/Perth
