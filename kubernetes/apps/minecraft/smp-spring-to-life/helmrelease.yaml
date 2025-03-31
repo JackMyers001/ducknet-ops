@@ -48,7 +48,7 @@ spec:
       maxPlayers: 20
       spawnProtection: 0
       gameMode: survival
-      motd: duckworld's cool SMP
+      motd: SMP Live
 
       memory: 10240M
 
