@@ -74,7 +74,7 @@ spec:
   interval: 30m
   timeout: 5m
   dependsOn:
-    - name: mc-router
+    - name: mc-velocity
     - name: volsync
   postBuild:
     substitute:

@@ -35,7 +35,14 @@ spec:
         player-info-forwarding-mode = "modern"
 
         [servers]
+        smp-spring-to-life = "mc-smp-spring-to-life-minecraft:25565"
+
         try = []
+
+        [forced-hosts]
+        "smp.minecraft.ducknet.fun" = [
+          "smp-spring-to-life"
+        ]
 
       velocityForwardingSecret: "CHANGEME!"
       velocityForwardingSecretFilePath: /server/forwarding.secret
