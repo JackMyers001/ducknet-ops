@@ -91,6 +91,14 @@ spec:
         enabled: true
         withGeneratedPassword: true
 
+      extraPorts:
+        - name: metrics
+          containerPort: 9100
+          protocol: TCP
+          service:
+            enabled: true
+            port: 9100
+
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: smp.minecraft.ducknet.fun
 
