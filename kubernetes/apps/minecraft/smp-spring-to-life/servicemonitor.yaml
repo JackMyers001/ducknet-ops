@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: smp-spring-to-life
+spec:
+  endpoints:
+    - targetPort: metrics
+      interval: 10s
+      path: /
+  jobLabel: smp-spring-to-life
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: minecraft
+      app.kubernetes.io/instance: mc-smp-spring-to-life-minecraft
+      app: mc-smp-spring-to-life-minecraft-metrics
