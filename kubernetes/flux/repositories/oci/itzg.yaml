@@ -28,3 +28,18 @@ spec:
   ref:
     tag: 1.2.5
   url: oci://ghcr.io/itzg/minecraft-server-charts/mc-router
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/ocirepository-source-v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: itzg-minecraft-proxy
+  namespace: flux-system
+spec:
+  interval: 2h
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 3.9.0
+  url: oci://ghcr.io/itzg/minecraft-server-charts/minecraft-proxy

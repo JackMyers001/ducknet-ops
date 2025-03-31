@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-proxy
+  namespace: minecraft
+spec:
+  interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: itzg-minecraft-proxy
+    namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    # https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft-proxy/values.yaml
+
+    minecraftProxy:
+      type: VELOCITY
+      velocityVersion: 3.4.0-SNAPSHOT
+
+      serviceType: LoadBalancer
+
+      configFilePath: /server/velocity.toml
+      config: |-
+        config-version = "2.7"
+        bind = "0.0.0.0:25577"
+        player-info-forwarding-mode = "modern"
+
+        [servers]
+        try = []
+
+      velocityForwardingSecret: "CHANGEME!"
+      velocityForwardingSecretFilePath: /server/forwarding.secret
+
+    serviceAnnotations:
+      lbipam.cilium.io/ips: "10.4.180.15"
