@@ -46,6 +46,7 @@ spec:
 
       difficulty: hard
       maxPlayers: 20
+      spawnProtection: 0
       gameMode: survival
       motd: duckworld's cool SMP
 
