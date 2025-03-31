@@ -90,3 +90,11 @@ spec:
       dataDir:
         enabled: true
         existingClaim: *app
+
+      fabricproxy-lite-config:
+        type: configMap
+        name: fabricproxy-lite-configmap
+        globalMounts:
+          - path: /data/config/FabricProxy-Lite.toml
+            subPath: FabricProxy-Lite.toml
+            readOnly: true

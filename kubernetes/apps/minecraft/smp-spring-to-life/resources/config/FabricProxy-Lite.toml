@@ -1,0 +1,5 @@
+hackOnlineMode = true
+hackEarlySend = true # Required for LuckPerms
+hackMessageChain = true
+disconnectMessage = "This server requires you to connect with Velocity."
+secret = "CHANGEME!"
