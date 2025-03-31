@@ -92,3 +92,14 @@ spec:
       dataDir:
         enabled: true
         existingClaim: *app
+
+    extraVolumes:
+      - volumes:
+          - name: &fabricModConfig fabric-mod-config
+            configMap:
+              name: fabric-mod-config-configmap
+        volumeMounts:
+          - name: *fabricModConfig
+            readOnly: true
+            mountPath: /data/config/antixray.toml
+            subPath: antixray.toml

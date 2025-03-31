@@ -5,3 +5,9 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ../../../template/volsync
+configMapGenerator:
+  - name: fabric-mod-config-configmap
+    files:
+      - antixray.toml=./resources/config/antixray.toml
+generatorOptions:
+  disableNameSuffixHash: true
