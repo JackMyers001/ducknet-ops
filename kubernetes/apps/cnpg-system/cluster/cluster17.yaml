@@ -33,7 +33,7 @@ spec:
       destinationPath: s3://ducknet-k8s-postgres/
       endpointURL: ${CLOUDFLARE_R2_ENDPOINT}
 
-      serverName: postgres17-v01
+      serverName: postgres17-v02
 
       s3Credentials:
         accessKeyId:
