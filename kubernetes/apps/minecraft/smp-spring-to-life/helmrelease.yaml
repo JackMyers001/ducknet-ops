@@ -24,7 +24,7 @@ spec:
 
     image:
       repository: itzg/minecraft-server
-      tag: java21-alpine@sha256:a1f9c281308ca342e26e8e738bd49564ce58056f910b67debeb573f99e341750
+      tag: java21-alpine@sha256:416660d251046c663c059cd29e1bc8f38b1abd263285f4d6e4ff6050e94e05bd
 
     resources:
       requests:
