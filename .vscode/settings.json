@@ -1,0 +1,8 @@
+{
+  "yaml.keyOrdering": false,
+
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true,
+  },
+}
