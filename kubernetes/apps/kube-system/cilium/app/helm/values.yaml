@@ -1,0 +1,82 @@
+---
+# https://docs.cilium.io/en/stable/helm-reference/
+
+autoDirectNodeRoutes: true
+
+bandwidthManager:
+  enabled: true
+  bbr: true
+
+bpf:
+  datapathMode: netkit
+  masquerade: true
+  distributedLRU:
+    enabled: true
+  mapDynamicSizeRatio: 0.08
+  preallocateMaps: true
+
+bpfClockProbe: true
+
+bgpControlPlane:
+  enabled: true
+
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+devices: enp+
+
+enableIPv4BIGTCP: true
+enableIPv6BIGTCP: true
+
+gatewayAPI:
+  enabled: true
+  enableAlpn: true
+  xffNumTrustedHops: 1
+
+ipam:
+  mode: kubernetes
+
+ipv4:
+  enabled: true
+
+ipv6:
+  enabled: false
+
+ipv4NativeRoutingCIDR: 10.244.0.0/16
+
+k8sServiceHost: localhost
+k8sServicePort: 7445
+kubeProxyReplacement: true
+
+loadBalancer:
+  acceleration: best-effort
+  mode: hybrid
+
+localRedirectPolicy: true
+
+operator:
+  replicas: 2
+  rollOutPods: true
+
+routingMode: native
+
+securityContext:
+  capabilities:
+    ciliumAgent:
+      - CHOWN
+      - KILL
+      - NET_ADMIN
+      - NET_RAW
+      - IPC_LOCK
+      - SYS_ADMIN
+      - SYS_RESOURCE
+      - DAC_OVERRIDE
+      - FOWNER
+      - SETGID
+      - SETUID
+    cleanCiliumState:
+      - NET_ADMIN
+      - SYS_ADMIN
+      - SYS_RESOURCE
