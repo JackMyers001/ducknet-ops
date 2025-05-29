@@ -37,7 +37,7 @@ instance:
           group: kustomize.toolkit.fluxcd.io
           kind: Kustomization
 
-      - # Add SOPS decryption to child Kustomizations
+      - # Add SOPS decryption + cluster-secrets to child Kustomizations
         patch: |
           - op: add
             path: /spec/patches
@@ -55,6 +55,10 @@ instance:
                     provider: sops
                     secretRef:
                       name: sops-age
+                  postBuild:
+                    substituteFrom:
+                      - name: cluster-secrets
+                        kind: Secret
               target:
                 kind: Kustomization
                 group: kustomize.toolkit.fluxcd.io

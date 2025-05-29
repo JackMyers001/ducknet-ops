@@ -38,6 +38,10 @@ spec:
       namespace: *namespace
   interval: 1h
   path: ./kubernetes/apps/external-secrets/external-secrets/stores
+  postBuild:
+    substituteFrom:
+      - name: bitwarden
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:
