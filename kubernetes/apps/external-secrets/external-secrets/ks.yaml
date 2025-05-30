@@ -42,6 +42,8 @@ spec:
     substituteFrom:
       - name: bitwarden
         kind: Secret
+      - name: cluster-secrets
+        kind: Secret
   prune: true
   retryInterval: 2m
   sourceRef:

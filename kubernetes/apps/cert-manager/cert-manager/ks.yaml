@@ -61,6 +61,10 @@ spec:
       namespace: *namespace
     - name: external-secrets-stores
       namespace: external-secrets
+  postBuild:
+    substituteFrom:
+      - name: cluster-secrets
+        kind: Secret
   interval: 1h
   path: ./kubernetes/apps/cert-manager/cert-manager/issuers/cloudflare
   prune: true
