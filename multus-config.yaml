@@ -1,0 +1,26 @@
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: mayastor-storage-network
+  namespace: kube-system
+spec:
+  podSelector:
+    matchLabels:
+      app: io-engine
+  config: |-
+    {
+      "cniVersion": "0.3.1",
+      "name": "mayastor-storage-network",
+      "type": "macvlan",
+      "master": ["enp1s0f0np0", "enp1s0f1np1"],
+      "mode": "bridge",
+      "ipam": {
+        "type": "host-local",
+        "subnet": "169.254.255.0/24",
+        "routes": [
+          {
+            "dst": "169.254.255.0/24"
+          }
+        ]
+      }
+    }

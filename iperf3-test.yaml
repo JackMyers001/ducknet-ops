@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iperf3-server-erying
+  namespace: default
+  labels:
+    app: iperf3-server-erying
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: iperf3-server-erying
+
+  template:
+    metadata:
+      labels:
+        app: iperf3-server-erying
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: talos-erying-01
+
+      containers:
+        - name: iperf3
+          image: networkstatic/iperf3
+          args: ["-s"]
+          ports:
+            - containerPort: 5201
+              name: iperf3
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: iperf3-server-erying
+#   namespace: default
+#   labels:
+#     app: iperf3-server-erying
+# spec:
+#   type: NodePort
+#   ports:
+#     - port: 5201
+#       targetPort: 5201
+#       nodePort: 30202
+#       protocol: TCP
+#       name: iperf3
+#   externalIPs:
+#     - 10.4.25.53
+#   selector:
+#     app: iperf3-server-erying

@@ -1,0 +1,251 @@
+KVStore:                Disabled   
+Kubernetes:             Ok         1.32 (v1.32.3) [linux/amd64]
+Kubernetes APIs:        ["EndpointSliceOrEndpoint", "cilium/v2::CiliumClusterwideEnvoyConfig", "cilium/v2::CiliumClusterwideNetworkPolicy", "cilium/v2::CiliumEndpoint", "cilium/v2::CiliumEnvoyConfig", "cilium/v2::CiliumNetworkPolicy", "cilium/v2::CiliumNode", "cilium/v2alpha1::CiliumCIDRGroup", "core/v1::Namespace", "core/v1::Pods", "core/v1::Service", "networking.k8s.io/v1::NetworkPolicy"]
+KubeProxyReplacement:   True   [enp4s0    10.4.20.51 2404:e80:92c0:20:5a47:caff:fe7b:312c fe80::5a47:caff:fe7b:312c (Direct Routing), enp1s0f0np0   10.254.255.51 fe80::eaeb:d3ff:fe3b:d8c0, siderolink  fdae:41e4:649b:9303:5435:8b66:e471:d042]
+Host firewall:          Disabled
+SRv6:                   Disabled
+CNI Chaining:           none
+CNI Config file:        successfully wrote CNI configuration file to /host/etc/cni/net.d/05-cilium.conflist
+Cilium:                 Ok   1.17.2 (v1.17.2-fb3ab54f)
+NodeMonitor:            Listening for events on 32 CPUs with 64x4096 of shared memory
+Cilium health daemon:   Ok   
+IPAM:                   IPv4: 6/254 allocated from 10.244.0.0/24, 
+Allocated addresses:
+  10.244.0.129 (ingress)
+  10.244.0.130 (kube-system/coredns-578d4f8ffc-rs5fd [restored])
+  10.244.0.148 (router)
+  10.244.0.17 (default/iperf3-server-657d758f95-bddw2 [restored])
+  10.244.0.250 (kube-system/coredns-578d4f8ffc-mj26q [restored])
+  10.244.0.254 (health)
+IPv4 BIG TCP:           Enabled   [65536]
+IPv6 BIG TCP:           Enabled   [65536]
+BandwidthManager:       EDT with BPF [BBR] [enp4s0, enp1s0f0np0, siderolink]
+Routing:                Network: Native   Host: BPF
+Attach Mode:            TCX
+Device Mode:            netkit
+Masquerading:           BPF       [enp4s0, enp1s0f0np0, siderolink]   10.244.0.0/16 [IPv4: Enabled, IPv6: Disabled]
+Clock Source for BPF:   jiffies   [250 Hz]
+Controller Status:      42/42 healthy
+  Name                                                    Last success   Last error   Count   Message
+  cilium-health-ep                                        20s ago        never        0       no error   
+  ct-map-pressure                                         21s ago        never        0       no error   
+  daemon-validate-config                                  19s ago        never        0       no error   
+  dns-garbage-collector-job                               23s ago        never        0       no error   
+  endpoint-1388-regeneration-recovery                     never          never        0       no error   
+  endpoint-190-regeneration-recovery                      never          never        0       no error   
+  endpoint-3678-regeneration-recovery                     never          never        0       no error   
+  endpoint-3834-regeneration-recovery                     never          never        0       no error   
+  endpoint-497-regeneration-recovery                      never          never        0       no error   
+  endpoint-626-regeneration-recovery                      never          never        0       no error   
+  endpoint-gc                                             2m23s ago      never        0       no error   
+  endpoint-periodic-regeneration                          23s ago        never        0       no error   
+  ep-bpf-prog-watchdog                                    21s ago        never        0       no error   
+  ipcache-inject-labels                                   21s ago        never        0       no error   
+  k8s-heartbeat                                           23s ago        never        0       no error   
+  link-cache                                              8s ago         never        0       no error   
+  node-neighbor-link-updater                              1s ago         never        0       no error   
+  proxy-ports-checkpoint                                  2m21s ago      never        0       no error   
+  resolve-identity-1388                                   2m20s ago      never        0       no error   
+  resolve-identity-3678                                   2m21s ago      never        0       no error   
+  resolve-labels-/                                        2m21s ago      never        0       no error   
+  resolve-labels-default/iperf3-server-657d758f95-bddw2   2m18s ago      never        0       no error   
+  resolve-labels-kube-system/coredns-578d4f8ffc-mj26q     2m18s ago      never        0       no error   
+  resolve-labels-kube-system/coredns-578d4f8ffc-rs5fd     2m18s ago      never        0       no error   
+  restoring-ep-identity (190)                             2m21s ago      never        0       no error   
+  restoring-ep-identity (3834)                            2m21s ago      never        0       no error   
+  restoring-ep-identity (497)                             2m21s ago      never        0       no error   
+  restoring-ep-identity (626)                             2m21s ago      never        0       no error   
+  sync-lb-maps-with-k8s-services                          2m21s ago      never        0       no error   
+  sync-policymap-1388                                     2m18s ago      never        0       no error   
+  sync-policymap-190                                      2m18s ago      never        0       no error   
+  sync-policymap-3834                                     2m18s ago      never        0       no error   
+  sync-policymap-497                                      2m17s ago      never        0       no error   
+  sync-policymap-626                                      2m18s ago      never        0       no error   
+  sync-to-k8s-ciliumendpoint (190)                        1s ago         never        0       no error   
+  sync-to-k8s-ciliumendpoint (3834)                       1s ago         never        0       no error   
+  sync-to-k8s-ciliumendpoint (626)                        1s ago         never        0       no error   
+  sync-utime                                              21s ago        never        0       no error   
+  waiting-initial-global-identities-ep (190)              2m21s ago      never        0       no error   
+  waiting-initial-global-identities-ep (3834)             2m21s ago      never        0       no error   
+  waiting-initial-global-identities-ep (626)              2m21s ago      never        0       no error   
+  write-cni-file                                          2m23s ago      never        0       no error   
+Proxy Status:            OK, ip 10.244.0.148, 0 redirects active on ports 10000-20000, Envoy: external
+Global Identity Range:   min 256, max 65535
+Hubble:                  Ok   Current/Max Flows: 538/4095 (13.14%), Flows/s: 3.48   Metrics: Disabled
+KubeProxyReplacement Details:
+  Status:                 True
+  Socket LB:              Enabled
+  Socket LB Tracing:      Enabled
+  Socket LB Coverage:     Hostns-only
+  Devices:                enp4s0    10.4.20.51 2404:e80:92c0:20:5a47:caff:fe7b:312c fe80::5a47:caff:fe7b:312c (Direct Routing), enp1s0f0np0   10.254.255.51 fe80::eaeb:d3ff:fe3b:d8c0, siderolink  fdae:41e4:649b:9303:5435:8b66:e471:d042
+  Mode:                   Hybrid
+    DSR Dispatch Mode:    IP Option/Extension
+  Backend Selection:      Random
+  Session Affinity:       Enabled
+  Graceful Termination:   Enabled
+  NAT46/64 Support:       Disabled
+  XDP Acceleration:       Best-Effort
+  Services:
+  - ClusterIP:      Enabled
+  - NodePort:       Enabled (Range: 30000-32767) 
+  - LoadBalancer:   Enabled 
+  - externalIPs:    Enabled 
+  - HostPort:       Enabled
+  Annotations:
+  - service.cilium.io/node
+  - service.cilium.io/src-ranges-policy
+  - service.cilium.io/type
+BPF Maps:   dynamic sizing: on (ratio: 0.002500)
+  Name                          Size
+  Auth                          524288
+  Non-TCP connection tracking   433360
+  TCP connection tracking       866720
+  Endpoint policy               65535
+  IP cache                      512000
+  IPv4 masquerading agent       16384
+  IPv6 masquerading agent       16384
+  IPv4 fragmentation            8192
+  IPv4 service                  65536
+  IPv6 service                  65536
+  IPv4 service backend          65536
+  IPv6 service backend          65536
+  IPv4 service reverse NAT      65536
+  IPv6 service reverse NAT      65536
+  Metrics                       1024
+  Ratelimit metrics             64
+  NAT                           866720
+  Neighbor table                866720
+  Global policy                 16384
+  Session affinity              65536
+  Sock reverse NAT              433360
+  Tunnel                        65536
+Encryption:       Disabled        
+Cluster health:   1/1 reachable   (2025-04-10T14:02:52Z)
+Name              IP              Node   Endpoints
+  talos-bd795i-01 (localhost):
+    Host connectivity to 10.4.20.51:
+      ICMP to stack:   OK, RTT=58.053µs
+      HTTP to agent:   OK, RTT=98.792µs
+    Endpoint connectivity to 10.244.0.254:
+      ICMP to stack:   OK, RTT=108.38µs
+      HTTP to agent:   OK, RTT=272.859µs
+Modules Health:
+      agent
+      ├── controlplane
+      │   ├── auth
+      │   │   ├── observer-job-auth-gc-identity-events            [OK] Primed (2m23s, x1)
+      │   │   ├── observer-job-auth-request-authentication        [OK] Primed (2m23s, x1)
+      │   │   └── timer-job-auth-gc-cleanup                       [OK] Primed (2m23s, x1)
+      │   ├── bgp-control-plane
+      │   │   ├── job-bgp-controller                              [OK] Running (2m21s, x1)
+      │   │   ├── job-bgp-crd-status-initialize                   [OK] Running (2m21s, x1)
+      │   │   ├── job-bgp-crd-status-update-job                   [OK] Running (2m21s, x1)
+      │   │   ├── job-bgp-policy-observer                         [OK] Running (2m21s, x1)
+      │   │   ├── job-bgp-state-observer                          [OK] Running (2m21s, x1)
+      │   │   ├── job-bgpcp-resource-store-events                 [OK] Running (2m21s, x5)
+      │   │   └── job-diffstore-events                            [OK] Running (2m21s, x2)
+      │   ├── ciliumenvoyconfig
+      │   │   ├── experimental
+      │   │   │   ├── job-reconcile                               [OK] OK, 0 object(s) (2m21s, x3)
+      │   │   │   └── job-refresh                                 [OK] Next refresh in 30m0s (2m21s, x1)
+      │   │   ├── observer-job-ccec-resource-events               [OK] Primed (2m21s, x1)
+      │   │   ├── observer-job-cec-resource-events                [OK] Primed (2m21s, x1)
+      │   │   ├── observer-job-headless-endpoint-events           [OK] Primed (2m21s, x1)
+      │   │   ├── observer-job-local-node-events                  [OK] Primed (2m21s, x1)
+      │   │   └── timer-job-reconcile-existing-configs            [OK] OK (5.17µs) (6s, x1)
+      │   ├── daemon
+      │   │   ├──                                                 [OK] daemon-validate-config (19s, x3)
+      │   │   ├── ep-bpf-prog-watchdog
+      │   │   │   └── ep-bpf-prog-watchdog                        [OK] ep-bpf-prog-watchdog (21s, x5)
+      │   │   └── job-sync-hostips                                [OK] Synchronized (21s, x3)
+      │   ├── dynamic-lifecycle-manager
+      │   │   ├── job-reconcile                                   [OK] OK, 0 object(s) (2m21s, x3)
+      │   │   └── job-refresh                                     [OK] Next refresh in 30m0s (2m21s, x1)
+      │   ├── enabled-features
+      │   │   └── job-update-config-metric                        [OK] Waiting for agent config (2m21s, x1)
+      │   ├── endpoint-manager
+      │   │   ├── cilium-endpoint-1388 (/)
+      │   │   │   ├── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   │   └── policymap-sync                              [OK] sync-policymap-1388 (2m18s, x1)
+      │   │   ├── cilium-endpoint-190 (kube-system/coredns-578d4f8ffc-mj26q)
+      │   │   │   ├── cep-k8s-sync                                [OK] sync-to-k8s-ciliumendpoint (190) (1s, x15)
+      │   │   │   ├── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   │   └── policymap-sync                              [OK] sync-policymap-190 (2m18s, x1)
+      │   │   ├── cilium-endpoint-3678 (/)
+      │   │   │   └── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   ├── cilium-endpoint-3834 (kube-system/coredns-578d4f8ffc-rs5fd)
+      │   │   │   ├── cep-k8s-sync                                [OK] sync-to-k8s-ciliumendpoint (3834) (1s, x15)
+      │   │   │   ├── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   │   └── policymap-sync                              [OK] sync-policymap-3834 (2m18s, x1)
+      │   │   ├── cilium-endpoint-497 (/)
+      │   │   │   ├── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   │   └── policymap-sync                              [OK] sync-policymap-497 (2m17s, x1)
+      │   │   ├── cilium-endpoint-626 (default/iperf3-server-657d758f95-bddw2)
+      │   │   │   ├── cep-k8s-sync                                [OK] sync-to-k8s-ciliumendpoint (626) (1s, x15)
+      │   │   │   ├── datapath-regenerate                         [OK] Endpoint regeneration successful (23s, x3)
+      │   │   │   └── policymap-sync                              [OK] sync-policymap-626 (2m18s, x1)
+      │   │   └── endpoint-gc                                     [OK] endpoint-gc (2m23s, x1)
+      │   ├── envoy-proxy
+      │   │   ├── observer-job-k8s-secrets-resource-events-cilium-secrets    [OK] Primed (2m21s, x1)
+      │   │   └── timer-job-version-check                         [OK] Primed (2m21s, x1)
+      │   ├── hubble
+      │   │   └── job-hubble                                      [OK] Running (2m23s, x1)
+      │   ├── identity
+      │   │   └── timer-job-id-alloc-update-policy-maps           [OK] OK (40.749µs) (2m21s, x1)
+      │   ├── l2-announcer
+      │   │   └── job-l2-announcer-lease-gc                       [OK] Running (2m23s, x1)
+      │   ├── nat-stats
+      │   │   └── timer-job-nat-stats                             [OK] OK (738.331µs) (21s, x1)
+      │   ├── node-manager
+      │   │   ├── background-sync                                 [OK] Node validation successful (0s, x3)
+      │   │   ├── node-checkpoint-writer                          [OK] node checkpoint written (83s, x2)
+      │   │   ├── nodes-add                                       [OK] Node adds successful (2m21s, x1)
+      │   │   └── nodes-delete                                    [OK] Node deletions successful (2m23s, x1)
+      │   ├── policy
+      │   │   └── observer-job-policy-importer                    [OK] Primed (2m23s, x1)
+      │   ├── service-manager
+      │   │   ├── job-health-check-event-watcher                  [OK] Waiting for health check events (2m23s, x1)
+      │   │   └── job-service-reconciler                          [OK] 4 NodePort frontend addresses (2m21s, x1)
+      │   ├── service-resolver
+      │   │   └── job-service-reloader-initializer                [OK] Running (2m23s, x1)
+      │   └── stale-endpoint-cleanup
+      │       └── job-endpoint-cleanup                            [OK] Running (2m21s, x1)
+      ├── datapath
+      │   ├── agent-liveness-updater
+      │   │   └── timer-job-agent-liveness-updater                [OK] OK (28.365µs) (0s, x1)
+      │   ├── bandwidth-manager
+      │   │   ├── job-derive-desired-qdiscs                       [OK] Running (2m21s, x1)
+      │   │   ├── job-reconcile                                   [OK] OK, 3 object(s) (20s, x6)
+      │   │   └── job-refresh                                     [OK] Next refresh in 29m59.999874927s (2m21s, x1)
+      │   ├── iptables
+      │   │   ├── ipset
+      │   │   │   ├── job-ipset-init-finalizer                    [OK] Running (2m23s, x1)
+      │   │   │   ├── job-reconcile                               [OK] OK, 0 object(s) (2m23s, x2)
+      │   │   │   └── job-refresh                                 [OK] Next refresh in 30m0s (2m23s, x1)
+      │   │   └── job-iptables-reconciliation-loop                [OK] iptables rules update completed (2m21s, x1)
+      │   ├── l2-responder
+      │   │   └── job-l2-responder-reconciler                     [OK] Running (2m21s, x1)
+      │   ├── maps
+      │   │   └── bwmap
+      │   │       ├── job-reconcile                               [OK] OK, 4 object(s) (2m18s, x11)
+      │   │       ├── job-refresh                                 [OK] Next refresh in 30m0s (2m21s, x1)
+      │   │       └── timer-job-pressure-metric-throttle          [OK] OK (5.25µs) (21s, x1)
+      │   ├── mtu
+      │   │   ├── job-endpoint-mtu-updater                        [OK] Endpoint MTU updated (2m21s, x1)
+      │   │   └── job-mtu-updater                                 [OK] MTU updated (1280) (2m23s, x1)
+      │   ├── node-address
+      │   │   └── job-node-address-update                         [OK] Running (2m23s, x1)
+      │   ├── orchestrator
+      │   │   └── job-reinitialize                                [OK] OK (2m17s, x1)
+      │   └── sysctl
+      │       ├── job-reconcile                                   [OK] OK, 19 object(s) (2m21s, x3)
+      │       └── job-refresh                                     [OK] Next refresh in 10m0s (2m23s, x1)
+      └── infra
+          ├── k8s-synced-crdsync
+          │   └── job-sync-crds                                   [OK] Running (2m23s, x1)
+          ├── metrics
+          │   ├── job-collect                                     [OK] Sampled 24 metrics in 1.48599ms, next collection at 2025-04-10 14:06:48.267777565 +0000 UTC m=+302.147992290 (2m21s, x1)
+          │   └── timer-job-cleanup                               [OK] Primed (2m21s, x1)
+          └── shell
+              └── job-listener                                    [OK] Listening on /var/run/cilium/shell.sock (2m21s, x1)
+      

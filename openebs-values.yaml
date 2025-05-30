@@ -1,0 +1,40 @@
+---
+openebs-crds:
+  csi:
+    # We will install volumeSnapshot CRDs manually
+    volumeSnapshots:
+      enabled: false
+
+engines:
+  # Disable LVM and ZFS engines (normal local-path is still enabled)
+  local:
+    lvm:
+      enabled: false
+    zfs:
+      enabled: false
+
+  replicated:
+    mayastor:
+      enabled: true
+
+mayastor:
+  crds:
+    enabled: false
+
+  csi:
+    node:
+      initContainers:
+        enabled: true
+
+  io_engine:
+    target:
+      nvmf:
+        iface: "subnet:169.254.255.0/24"
+
+  localpv-provisioner:
+    enabled: false
+
+localpv-provisioner:
+  localpv:
+    # Fix mismatch between various OpenEBS components (default is `/var/openebs/local` for some reason)
+    basePath: "/var/local/openebs"

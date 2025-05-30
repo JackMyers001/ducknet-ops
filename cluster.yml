@@ -1,0 +1,74 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres17
+  namespace: cnpg-system
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.4
+
+  instances: 3
+
+  monitoring:
+    enablePodMonitor: true
+
+  storage:
+    size: 20Gi
+    storageClass: openebs-hostpath
+
+  superuserSecret:
+    name: cnpg-superuser-secret
+
+  enableSuperuserAccess: true
+
+  bootstrap:
+    recovery:
+      source: clusterBackup
+
+  backup:
+    barmanObjectStore:
+      data:
+        compression: bzip2
+
+      wal:
+        compression: bzip2
+        maxParallel: 8
+
+      destinationPath: &r2Destination s3://ducknet-k8s-postgres/
+      endpointURL: &r2Endpoint https://45e2984f34f4f864e4e5f39abf4b03dd.r2.cloudflarestorage.com
+
+      serverName: postgres17-v02
+
+      s3Credentials:
+        accessKeyId:
+          name: &r2SecretName cnpg-r2-backup-secret
+          key: AWS_ACCESS_KEY_ID
+        secretAccessKey:
+          name: *r2SecretName
+          key: AWS_SECRET_ACCESS_KEY
+
+    retentionPolicy: 30d
+
+  externalClusters:
+    - name: clusterBackup
+      barmanObjectStore:
+        data:
+          compression: bzip2
+
+        wal:
+          compression: bzip2
+          maxParallel: 8
+
+        destinationPath: *r2Destination
+        endpointURL: *r2Endpoint
+
+        serverName: postgres17-v01
+
+        s3Credentials:
+          accessKeyId:
+            name: *r2SecretName
+            key: AWS_ACCESS_KEY_ID
+          secretAccessKey:
+            name: *r2SecretName
+            key: AWS_SECRET_ACCESS_KEY

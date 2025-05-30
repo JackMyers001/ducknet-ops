@@ -1,0 +1,11 @@
+
+
+mini 0 -> prox 1
+mini 1 -> eyng 0
+eyng 1 -> prox 0
+
+
+
+mini = 51
+eyng = 53
+prox = 54,55

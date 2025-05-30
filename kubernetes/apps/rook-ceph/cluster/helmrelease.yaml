@@ -57,6 +57,11 @@ spec:
         readAffinity:
           enabled: true
 
+      dashboard:
+        enabled: true
+        ssl: false
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
+
       mgr:
         modules:
           - name: diskprediction_local
@@ -68,34 +73,24 @@ spec:
           - name: rook
             enabled: true
 
-      dashboard:
-        enabled: true
-        ssl: false
-        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
-
       network:
         provider: host
+        addressRanges:
+          # public: ["10.4.20.0/24"]
+          public: ["169.254.255.0/24"]
+          cluster: ["169.254.255.0/24"]
         connections:
           requireMsgr2: true
 
       storage:
-        useAllNodes: false
+        useAllNodes: true
         useAllDevices: false
 
         config:
           encryptedDevice: "true"
           osdsPerDevice: "1"
 
-        nodes:
-          - name: talos-bd795i-01
-            devices:
-              - name: /dev/disk/by-id/nvme-Samsung_SSD_980_PRO_2TB_S6B0NU0W405703D
-          - name: talos-prox-01
-            devices:
-              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
-          - name: talos-prox-02
-            devices:
-              - name: /dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1
+        devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS*
 
     cephBlockPools:
       - name: ceph-blockpool
@@ -114,10 +109,7 @@ spec:
           mountOptions: ["discard"]
 
           parameters:
-            # As much as I'd like to use zstd, the Ceph docs say that it is "*not* recommended for
-            # BlueStore due to high CPU overhead when compressing small amounts of data"
-            # https://docs.ceph.com/en/reef/rados/configuration/bluestore-config-ref/#confval-bluestore_compression_algorithm
-            compression_algorithm: "lz4"
+            compression_algorithm: "zstd"
             compression_mode: "aggressive"
 
             # RBD image format

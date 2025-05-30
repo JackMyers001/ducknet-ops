@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvme-admin-pod
+  namespace: kube-system
+  labels:
+    app: nvme-admin
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: talos-bd795i-01
+  containers:
+    - name: nvme-admin
+      image: debian:bullseye-slim
+      command: ["sleep", "infinity"]
+      securityContext:
+        privileged: true
+        capabilities:
+          add: ["SYS_ADMIN"]
+      volumeMounts:
+        - name: host-devices
+          mountPath: /dev
+  volumes:
+    - name: host-devices
+      hostPath:
+        path: /dev
+        type: Directory
+  restartPolicy: Never

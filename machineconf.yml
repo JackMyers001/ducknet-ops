@@ -1,0 +1,140 @@
+---
+# yaml-language-server: $schema=https://www.talos.dev/v1.9/schemas/config.schema.json
+cluster:
+  allowSchedulingOnControlPlanes: true
+
+  network:
+    cni:
+      name: none
+
+    podSubnets: ["10.244.0.0/16"]
+
+  proxy:
+    disabled: true
+
+machine:
+  features:
+    hostDNS:
+      enabled: true
+
+      # Required to make DNS work with Cilium BPF. See https://github.com/siderolabs/talos/issues/10002
+      forwardKubeDNSToHost: false
+
+  kubelet:
+    extraArgs:
+      rotate-server-certificates: true
+
+    # OpenEBS hostpath
+    extraMounts:
+      - destination: /var/openebs/local
+        type: bind
+        source: /var/openebs/local
+        options:
+          - bind
+          - rshared
+          - rw
+
+  sysctls:
+    net.core.default_qdisc: fq
+    net.core.rmem_max: 67108864
+    net.core.wmem_max: 67108864
+    net.ipv4.tcp_congestion_control: bbr
+    net.ipv4.tcp_fastopen: 3
+    net.ipv4.tcp_mtu_probing: 1
+    net.ipv4.tcp_rmem: 4096 87380 33554432
+    net.ipv4.tcp_wmem: 4096 65536 33554432
+    net.ipv4.tcp_window_scaling: 1
+---
+machine:
+  network:
+    hostname: "talos-prox-01"
+
+    interfaces:
+      - # net1 (pve-01 port 0)
+        deviceSelector:
+          hardwareAddr: bc:24:11:de:49:c8
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.54/32]
+        routes:
+          - { network: 169.254.255.53/32, metric: 2048 }
+
+      - # net2 (pve-01 port 1)
+        deviceSelector:
+          hardwareAddr: bc:24:11:fa:17:f8
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.54/32]
+        routes:
+          - { network: 169.254.255.51/32, metric: 2048 }
+
+  # NVIDIA driver
+  kernel:
+    modules:
+      - name: nvidia
+      - name: nvidia_uvm
+      - name: nvidia_drm
+      - name: nvidia_modeset
+
+  sysctls:
+    net.core.bpf_jit_harden: 1
+---
+# yaml-language-server: $schema=https://www.talos.dev/v1.9/schemas/config.schema.json
+machine:
+  install:
+    extraKernelArgs:
+      - amd_pstate=active
+      - cpufreq.default_governor=performance
+      - intel_idle.max_cstate=0
+
+  network:
+    hostname: "talos-bd795i-01"
+
+    interfaces:
+      - # Port 0 -> pve-01 Port 1
+        deviceSelector:
+          hardwareAddr: e8:eb:d3:3b:d8:c0 # Port 0
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.51/32]
+        routes:
+          - { network: 169.254.255.54/32, metric: 2048 } # prox-01
+
+      - # Port 1 -> erying-01 Port 0
+        deviceSelector:
+          hardwareAddr: e8:eb:d3:3b:d8:c1 # Port 1
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.51/32]
+        routes:
+          - { network: 169.254.255.53/32, metric: 2048 }
+---
+# yaml-language-server: $schema=https://www.talos.dev/v1.9/schemas/config.schema.json
+machine:
+  install:
+    extraKernelArgs:
+      - amd_pstate=active
+      - cpufreq.default_governor=performance
+      - intel_idle.max_cstate=0
+
+  network:
+    hostname: "talos-erying-01"
+
+    interfaces:
+      - # Port 0 -> bd795i-01 Port 1
+        deviceSelector:
+          hardwareAddr: e8:eb:d3:02:94:a0 # Port 0
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.53/32]
+        routes:
+          - { network: 169.254.255.51/32, metric: 2048 }
+
+      - # Port 1 -> pve-01 Port 0
+        deviceSelector:
+          hardwareAddr: e8:eb:d3:02:94:a1 # Port 1
+        dhcp: false
+        mtu: 9000
+        addresses: [169.254.255.53/32]
+        routes:
+          - { network: 169.254.255.54/32, metric: 2048 } # prox-01
