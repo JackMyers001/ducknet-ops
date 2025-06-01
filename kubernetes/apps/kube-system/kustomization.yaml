@@ -9,3 +9,4 @@ resources:
   - ./cilium/ks.yaml
   - ./descheduler/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./snapshot-controller/ks.yaml
