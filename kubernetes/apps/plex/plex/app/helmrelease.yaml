@@ -101,28 +101,12 @@ spec:
         globalMounts:
           - path: /config/Library/Application Support/Plex Media Server/Cache
 
-      anime:
+      media:
         type: nfs
         server: "10.4.20.10"
-        path: /mnt/coeus-pool/media/anime
+        path: /mnt/coeus-pool/media
         globalMounts:
-          - path: /media/anime
-            readOnly: true
-
-      movies:
-        type: nfs
-        server: "10.4.20.10"
-        path: /mnt/coeus-pool/media/movies
-        globalMounts:
-          - path: /media/movies
-            readOnly: true
-
-      shows:
-        type: nfs
-        server: "10.4.20.10"
-        path: /mnt/coeus-pool/media/shows
-        globalMounts:
-          - path: /media/shows
+          - path: /media
             readOnly: true
 
       tmpfs:
