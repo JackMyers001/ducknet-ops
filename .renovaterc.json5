@@ -3,6 +3,7 @@
   extends: [
     "config:recommended",
     "github>JackMyers001/ducknet-ops//.renovate/groups.json5",
+    "github>JackMyers001/ducknet-ops//.renovate/labels.json5",
     "github>JackMyers001/ducknet-ops//.renovate/semanticCommits.json5",
     ":disableRateLimiting",
     ":semanticCommits",
