@@ -1,5 +1,14 @@
 {
+  "json5.format.keyQuotes": "none-double",
+  "json5.format.trailingCommas": "all",
+  "json5.format.stringQuotes": "double",
+
   "yaml.keyOrdering": false,
+
+  "[json5]": {
+      "editor.defaultFormatter": "BlueGlassBlock.better-json5",
+      "editor.formatOnSave": true,
+  },
 
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml",

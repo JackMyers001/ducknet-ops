@@ -1,5 +1,6 @@
 {
   "recommendations": [
+    "BlueGlassBlock.better-json5",
     "EditorConfig.EditorConfig",
     "redhat.vscode-yaml",
   ]
