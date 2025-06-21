@@ -22,5 +22,12 @@
       semanticCommitScope: "container",
       commitMessageTopic: "image {{depName}}",
     },
+    {
+      matchDatasources: [
+        "github-releases",
+      ],
+      semanticCommitScope: "github-release",
+      commitMessageTopic: "release {{depName}}",
+    },
   ],
 }

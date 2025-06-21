@@ -49,5 +49,13 @@
         "renovate/helm",
       ],
     },
+    {
+      matchDatasources: [
+        "github-releases",
+      ],
+      addLabels: [
+        "renovate/github-release",
+      ],
+    },
   ],
 }
