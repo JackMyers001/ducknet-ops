@@ -1,0 +1,73 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: duckcraft
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: minecraft
+  install:
+    remediation:
+      retries: -1
+  interval: 1h
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    # https://github.com/itzg/minecraft-server-charts/blob/master/charts/minecraft/values.yaml
+
+    image:
+      repository: itzg/minecraft-server
+      tag: java21-graalvm@sha256:da941c32477a794823da6e749d77af180e850df908a4676096125f9d83388731
+
+    resources:
+      requests:
+        cpu: 2000m
+        memory: 8Gi
+
+    extraEnv:
+      TZ: Australia/Perth
+
+    minecraftServer:
+      eula: true
+      version: 1.21.6
+      type: FABRIC
+
+      difficulty: hard
+      whitelist: duckworld
+      ops: duckworld
+      maxPlayers: 20
+      gameMode: survival
+      motd: DuckCraft
+
+      memory: 8192M
+
+      modrinth:
+        projects:
+          # Core
+          - fabric-api:0.127.1+1.21.6
+
+          # Optimization
+          - c2me-fabric:0.3.4+alpha.0.42+1.21.6
+          - ferrite-core:8.0.0-fabric
+          - krypton:0.2.9
+          - lithium:mc1.21.6-0.17.0-fabric
+          - scalablelux:0.1.4+fabric.b88b7b4
+
+          # Misc
+          - spark:1.10.139-fabric
+
+      vanillaTweaksShareCodes:
+        - CiZ8VC # Track Statistics v1.1.14
+        - 74zhfL # Track Raw Statistics v1.7.8
+
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: duckcraft.home.${DOMAIN_DN}
+
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: duckcraft
