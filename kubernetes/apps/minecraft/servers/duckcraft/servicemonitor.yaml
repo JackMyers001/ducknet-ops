@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: duckcraft
+spec:
+  endpoints:
+    - targetPort: metrics
+      interval: 10s
+      path: /
+  jobLabel: duckcraft
+  selector:
+    matchLabels:
+      app: duckcraft-minecraft-metrics
+      app.kubernetes.io/name: minecraft
+      app.kubernetes.io/instance: duckcraft-minecraft

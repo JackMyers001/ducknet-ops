@@ -57,12 +57,21 @@ spec:
           - lithium:mc1.21.6-0.17.0-fabric
           - scalablelux:0.1.4+fabric.b88b7b4
 
-          # Misc
+          # Performance Monitoring
+          # - fabricexporter # TODO: enable once the mod is officially marked as compatible with 1.21.6
           - spark:1.10.139-fabric
 
       vanillaTweaksShareCodes:
         - CiZ8VC # Track Statistics v1.1.14
         - 74zhfL # Track Raw Statistics v1.7.8
+
+      extraPorts:
+        - name: metrics
+          containerPort: 25585
+          protocol: TCP
+          service:
+            enabled: true
+            port: 9100
 
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: duckcraft.home.${DOMAIN_DN}
