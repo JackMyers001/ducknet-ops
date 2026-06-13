@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: &name bitwarden-tls-certs
+spec:
+  dnsNames:
+    - external-secrets-bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - bitwarden-sdk-server.external-secrets.svc.cluster.local
+    - bitwarden-sdk-server.external-secrets
+    - bitwarden-sdk-server
+    - localhost
+  ipAddresses:
+    - 127.0.0.1
+    - ::1
+  issuerRef:
+    name: bitwarden-certificate-issuer
+  privateKey:
+    algorithm: RSA
+    encoding: PKCS8
+    size: 2048
+  secretName: *name

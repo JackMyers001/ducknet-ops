@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cert-manager.io/issuer_v1.json
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: bitwarden-bootstrap-issuer
+spec:
+  selfSigned: {}
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cert-manager.io/certificate_v1.json
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: &name bitwarden-bootstrap-certificate
+spec:
+  commonName: *name
+  isCA: true
+  issuerRef:
+    name: bitwarden-bootstrap-issuer
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  secretName: bitwarden-bootstrap-certificate-secret
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cert-manager.io/issuer_v1.json
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: bitwarden-certificate-issuer
+spec:
+  ca:
+    secretName: bitwarden-bootstrap-certificate-secret

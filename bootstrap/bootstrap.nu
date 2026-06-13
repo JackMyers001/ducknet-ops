@@ -71,9 +71,24 @@ let vars = (
     | from json
 )
 
+kustomize build kustomize/apps | vals eval -f - | kubectl apply --server-side --force-conflicts -f -
+
 # Cilium
 bootstrap-helm-release kube-system cilium $vars
 apply-kubernetes-resource kube-system cilium "networking.yaml" $vars
 
 # cert-manager
 bootstrap-helm-release cert-manager cert-manager
+
+# External Secrets Operator
+apply-kubernetes-resource external-secrets bitwarden-sdk-server issuer.yaml
+apply-kubernetes-resource external-secrets bitwarden-sdk-server certificate.yaml
+
+bootstrap-helm-release external-secrets external-secrets
+bootstrap-helm-release external-secrets bitwarden-sdk-server
+
+(apply-kubernetes-resource
+    external-secrets
+    bitwarden-sdk-server
+    clustersecretstore.yaml
+)
