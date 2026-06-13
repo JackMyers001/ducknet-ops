@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+cluster:
+  allowSchedulingOnControlPlanes: true
+  etcd:
+    advertisedSubnets:
+      - ${IPV6_BASE}::/48
+  network:
+    cni:
+      name: none
+    podSubnets:
+      - ${IPV6_BASE}:6900::/56
+    serviceSubnets:
+      - fd00:10:96::/112
+  proxy:
+    disabled: true
+machine:
+  kubelet:
+    nodeIP:
+      validSubnets:
+        - ${IPV6_BASE}::/48
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: ResolverConfig
+nameservers:
+  - address: ${IPV6_BASE}:1020::1
