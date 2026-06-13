@@ -74,3 +74,6 @@ let vars = (
 # Cilium
 bootstrap-helm-release kube-system cilium $vars
 apply-kubernetes-resource kube-system cilium "networking.yaml" $vars
+
+# cert-manager
+bootstrap-helm-release cert-manager cert-manager
