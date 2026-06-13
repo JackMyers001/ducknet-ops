@@ -1,0 +1,17 @@
+[tools]
+"aqua:nushell/nushell" = "latest"
+bitwarden = "latest"
+bitwarden-secrets-manager = "latest"
+"cargo:https://github.com/nushell/nufmt" = "latest"
+helm = "latest"
+hk = "latest"
+kubectl = "latest"
+oxfmt = "latest"
+pkl = "latest"
+vals = "latest"
+
+[tasks.lint]
+run = "hk check --all --slow"
+
+[tasks.lint-fix]
+run = "hk fix --all --slow"
