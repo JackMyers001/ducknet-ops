@@ -95,3 +95,4 @@ bootstrap-helm-release external-secrets bitwarden-sdk-server
 
 # Flux
 bootstrap-helm-release flux-system flux-operator
+bootstrap-helm-release flux-system flux-instance
