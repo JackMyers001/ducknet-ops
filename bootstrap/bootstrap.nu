@@ -92,3 +92,6 @@ bootstrap-helm-release external-secrets bitwarden-sdk-server
     bitwarden-sdk-server
     clustersecretstore.yaml
 )
+
+# Flux
+bootstrap-helm-release flux-system flux-operator
