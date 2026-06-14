@@ -120,6 +120,9 @@ spec:
       name: CF-Connecting-IP
       failClosed: true
 
+  # Enable HTTP3
+  http3: {}
+
   # Enable TCP Keepalive
   tcpKeepalive: {}
 
@@ -134,6 +137,9 @@ kind: ClientTrafficPolicy
 metadata:
   name: internal
 spec:
+  # Enable HTTP3
+  http3: {}
+
   # Enable TCP Keepalive
   tcpKeepalive: {}
 
