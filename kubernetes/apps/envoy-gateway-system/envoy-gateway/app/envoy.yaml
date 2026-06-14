@@ -96,20 +96,51 @@ spec:
             scheme: https
             statusCode: 301
 ---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/backendtrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: BackendTrafficPolicy
+metadata:
+  name: envoy-default
+spec:
+  # Enable TCP Keepalive
+  tcpKeepalive: {}
+
+  targetSelectors:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
 kind: ClientTrafficPolicy
 metadata:
-  name: external-cloudflare-source-ip
+  name: external
 spec:
   clientIPDetection:
     customHeader:
       name: CF-Connecting-IP
       failClosed: true
+
+  # Enable TCP Keepalive
+  tcpKeepalive: {}
+
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: envoy-external
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/clienttrafficpolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: ClientTrafficPolicy
+metadata:
+  name: internal
+spec:
+  # Enable TCP Keepalive
+  tcpKeepalive: {}
+
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
 apiVersion: gateway.envoyproxy.io/v1alpha1
