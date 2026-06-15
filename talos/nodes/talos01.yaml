@@ -1,0 +1,40 @@
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos01
+auto: off
+
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: cluster
+selector:
+  match: mac(link.permanent_addr) == "e8:eb:d3:3b:d8:c0"
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: LinkConfig
+name: cluster
+mtu: 9000
+up: true
+---
+apiVersion: v1alpha1
+kind: DHCPv6Config
+name: cluster
+
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: storage
+selector:
+  match: mac(link.permanent_addr) == "e8:eb:d3:3b:d8:c1"
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: LinkConfig
+name: storage
+mtu: 9000
+up: false # TODO
