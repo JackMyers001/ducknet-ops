@@ -37,4 +37,6 @@ apiVersion: v1alpha1
 kind: LinkConfig
 name: storage
 mtu: 9000
-up: false # TODO
+up: true
+addresses:
+  - address: fd5a:5b4f:9241::33/64
