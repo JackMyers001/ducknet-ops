@@ -38,7 +38,8 @@ spec:
     kubeProxyReplacement: true
 
     operator:
-      replicas: 1
+      replicas: 2
+      rollOutPods: true
 
     routingMode: native
 
