@@ -46,6 +46,21 @@ def bootstrap-helm-release [namespace: string, name: string, vars: record = {}] 
     | ^helm upgrade --install $name $release.chart --namespace $namespace --create-namespace --version $release.version --values /dev/stdin --wait --wait-for-jobs
 }
 
+def apply-crds [namespace: string, name: string, vars: record = {}] {
+    log info $"Bootstrapping CRDs from Helm release ($namespace)/($name)"
+
+    let release = get-flux-values $namespace $name
+
+    $release.values
+    | substitute-vars $vars
+    | ^helm template $name $release.chart --version $release.version --values /dev/stdin --include-crds
+    | from yaml
+    | where kind? == "CustomResourceDefinition"
+    | each { to yaml }
+    | str join "---\n"
+    | kubectl apply --server-side --force-conflicts -f -
+}
+
 def apply-kubernetes-resource [
     namespace: string
     name: string
@@ -71,7 +86,12 @@ let vars = (
     | from json
 )
 
+# Log into GHCR reo for Helm (fixes weird 403 issues; see https://jon.sprig.gs/blog/post/3141)
+^gh auth token | ^helm registry login ghcr.io --username unused --password-stdin
+
 kustomize build kustomize/apps | vals eval -f - | kubectl apply --server-side --force-conflicts -f -
+
+apply-crds observability grafana-operator
 
 # Cilium
 bootstrap-helm-release kube-system cilium $vars
