@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kube-prometheus-stack
+  interval: 1h
+  values:
+    cleanPrometheusOperatorObjectNames: true
+
+    alertmanager:
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - alertmanager.${DOMAIN_DN}
+          parentRefs: &internalGw
+            - name: envoy-internal
+              namespace: envoy-gateway-system
+
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager
+
+        externalUrl: https://alertmanager.${DOMAIN_DN}
+
+        storage:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 1Gi
+
+    grafana:
+      enabled: false
+      forceDeployDashboards: true
+      operator:
+        dashboardsConfigMapRefEnabled: true
+        folder: observability
+        matchLabels:
+          dashboards: grafana
+
+    kubeEtcd:
+      service:
+        selector:
+          component: kube-apiserver # etcd runs on control plane nodes
+
+    kubeProxy:
+      enabled: false
+
+    kube-state-metrics:
+      fullnameOverride: kube-state-metrics
+
+    prometheus:
+      route:
+        main:
+          enabled: true
+          hostnames:
+            - prometheus.${DOMAIN_DN}
+          parentRefs: *internalGw
+
+      prometheusSpec:
+        externalUrl: https://prometheus.${DOMAIN_DN}
+
+        podMonitorSelectorNilUsesHelmValues: false
+        probeSelectorNilUsesHelmValues: false
+        ruleSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
+        serviceMonitorSelectorNilUsesHelmValues: false
+
+        retention: 30d
+        retentionSize: 50GB
+
+        resources:
+          requests:
+            cpu: 100m
+          limits:
+            memory: 2000Mi
+
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: ceph-block
+              resources:
+                requests:
+                  storage: 50Gi
+
+    prometheus-node-exporter:
+      fullnameOverride: node-exporter
