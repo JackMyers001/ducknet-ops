@@ -10,3 +10,6 @@ spec:
     name: snapshot-controller
   interval: 1h
   values:
+    controller:
+      serviceMonitor:
+        create: true

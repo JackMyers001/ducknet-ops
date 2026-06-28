@@ -10,3 +10,8 @@ spec:
     name: external-secrets
   interval: 1h
   values:
+    grafanaDashboard:
+      enabled: true
+
+    serviceMonitor:
+      enabled: true

@@ -10,3 +10,8 @@ spec:
     name: grafana-operator
   interval: 1h
   values:
+    dashboard:
+      enabled: true
+
+    serviceMonitor:
+      enabled: true

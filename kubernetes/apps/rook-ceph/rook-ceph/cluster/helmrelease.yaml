@@ -21,6 +21,7 @@ spec:
         enabled: true
         urlPrefix: /
         ssl: false
+        prometheusEndpoint: http://prometheus-operated.observability.svc.cluster.local:9090
 
       mgr:
         modules:
@@ -43,6 +44,10 @@ spec:
         devicePathFilter: /dev/disk/by-id/nvme-SAMSUNG_MZQL23T8HCLS*
         useAllDevices: true
         useAllNodes: true
+
+    monitoring:
+      enabled: true
+      createPrometheusRules: true
 
     toolbox:
       enabled: true
