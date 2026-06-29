@@ -1,0 +1,61 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kopiur
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kopiur
+  interval: 1h
+  values:
+    controller:
+      listenAddr: "[::]:8081"
+      extraVolumes:
+        - name: repo
+          nfs:
+            server: coeus.storage.internal
+            path: /mnt/coeus-pool/k8s/kopiur
+      extraVolumeMounts:
+        - name: repo
+          mountPath: /repo
+
+      resources:
+        requests:
+          cpu: 100m
+        limits:
+          memory: 2Gi
+
+      streamingLists: true
+
+    features:
+      credentialProjection:
+        enabled: true
+
+    grafanaDashboard:
+      enabled: true
+      grafanaOperator:
+        enabled: true
+        matchLabels:
+          dashboards: grafana
+
+    installScope: cluster
+
+    metrics:
+      serviceMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
+
+    podSecurityContext:
+      runAsNonRoot: true
+      runAsUser: 65534
+      runAsGroup: 65534
+      fsGroup: 65534
+      fsGroupChangePolicy: OnRootMismatch
+
+    webhook:
+      listenAddr: "[::]:8443"
+      serviceMonitor:
+        enabled: true
