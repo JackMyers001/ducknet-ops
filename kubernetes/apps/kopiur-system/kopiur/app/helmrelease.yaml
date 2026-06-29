@@ -10,7 +10,15 @@ spec:
     name: kopiur
   interval: 1h
   values:
+    image:
+      controller:
+        repository: jackmyers001/kopiur-controller
+        digest: sha256:dcadfb597756bf4d60533561b6a83bee035981dcead8c7146bfe52d877aef9d3
+
     controller:
+      extraEnv:
+        - name: KOPIUR_CONTROLLER_ADDR
+          value: "[::]:8081"
       extraVolumes:
         - name: repo
           nfs:
@@ -55,6 +63,7 @@ spec:
       fsGroupChangePolicy: OnRootMismatch
 
     webhook:
+      listenAddr: "[::]:8443"
       tls:
         mode: self
       serviceMonitor:
