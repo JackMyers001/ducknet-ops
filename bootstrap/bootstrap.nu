@@ -115,6 +115,12 @@ bootstrap-helm-release external-secrets bitwarden-sdk-server
     clustersecretstore.yaml
 )
 
+(apply-kubernetes-resource
+    external-secrets
+    external-secrets
+    clusterexternalsecret.yaml
+)
+
 # Flux
 bootstrap-helm-release flux-system flux-operator
 bootstrap-helm-release flux-system flux-instance
