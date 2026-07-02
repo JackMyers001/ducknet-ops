@@ -19,7 +19,7 @@ spec:
               tag: 1.43.3.10793-cd55560bb@sha256:05c19f3fd193d938ffa4905d9a7e7964515728f1cb2b5eedf0124ff5f5da2f32
 
             env:
-              PLEX_ADVERTISE_URL: https://plex.${DOMAIN_DN}:443,http://10.4.180.21:32400
+              PLEX_ADVERTISE_URL: https://plex.${DOMAIN_DN}:443
               TZ: Australia/Perth
 
             probes:
