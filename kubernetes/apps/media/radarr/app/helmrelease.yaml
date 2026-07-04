@@ -1,0 +1,104 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: radarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: radarr
+  interval: 1h
+  values:
+    controllers:
+      radarr:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/home-operations/radarr
+              tag: 6.2.1.10461@sha256:a566e7d364b96ce8ffb1b582266e656c69f3a12dec289d72bb0daa647ed4725e
+
+            env:
+              RADARR__APP__INSTANCENAME: Radarr
+              RADARR__APP__THEME: dark
+              RADARR__LOG__DBENABLED: "False"
+              RADARR__LOG__LEVEL: info
+              RADARR__SERVER__PORT: &port 80
+              RADARR__UPDATE__BRANCH: develop
+              TZ: Australia/Perth
+
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /ping
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+            resources:
+              requests:
+                cpu: 100m
+              limits:
+                memory: 4Gi
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+        supplementalGroups: [4001, 4011]
+
+    service:
+      app:
+        ports:
+          http:
+            port: *port
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN_DN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: envoy-gateway-system
+
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+
+      media:
+        type: nfs
+        server: coeus.storage.internal
+        path: /mnt/coeus-pool/media
+        globalMounts:
+          - path: /media
+
+      tmp:
+        type: emptyDir
