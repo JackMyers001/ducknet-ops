@@ -91,6 +91,7 @@ let vars = (
 
 kustomize build kustomize/apps | vals eval -f - | kubectl apply --server-side --force-conflicts -f -
 
+apply-crds envoy-gateway-system envoy-gateway
 apply-crds observability grafana-operator
 apply-crds observability kube-prometheus-stack
 
