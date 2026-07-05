@@ -31,6 +31,7 @@ spec:
         projects:
           # Core
           - fabric-api:0.154.0+26.2
+          - proxy-protocol-support:1.2.1-fabric
 
           # Optimisation
           - ferrite-core:9.0.0-fabric

@@ -14,6 +14,9 @@ spec:
       repository: itzg/mc-router
       tag: 1.44.0@sha256:74c0f682cb45a1ac7ac25082c63f236bd6b04395508ad41d5825fd8cc8828b8f
 
+    minecraftRouter:
+      useProxyProtocol: true
+
     resources:
       requests:
         cpu: 100m
