@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-router
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mc-router
+  interval: 1h
+  values:
+    image:
+      repository: itzg/mc-router
+      tag: 1.44.0@sha256:74c0f682cb45a1ac7ac25082c63f236bd6b04395508ad41d5825fd8cc8828b8f
+
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 100Mi
+
+    services:
+      minecraft:
+        type: LoadBalancer
+        annotations:
+          "io.cilium/lb-ipam-ips": "${IPV6_BASE}:fff0::21"
