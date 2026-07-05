@@ -1,0 +1,55 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: duckcraft
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: minecraft
+  interval: 1h
+  values:
+    image:
+      repository: itzg/minecraft-server
+      tag: 2026.7.0-java25@sha256:5ffbc91d933e2f0e194a4f49674a2d17b65bb051c86e61961a6c775312ef61c0
+
+    minecraftServer:
+      eula: "TRUE"
+      version: "26.2"
+      type: FABRIC
+
+      difficulty: hard
+      ops: duckworld
+      maxPlayers: 20
+      gameMode: survival
+      motd: DuckCraft
+
+      memory: 8192M
+
+      modrinth:
+        projects:
+          # Core
+          - fabric-api:0.154.0+26.2
+
+          # Optimisation
+          - ferrite-core:9.0.0-fabric
+
+          # o11y
+          - spark:1.10.173-fabric
+
+      extraEnv:
+        JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv6Addresses=true"
+
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: duckcraft.mc.${DOMAIN_DN}
+
+    resources:
+      requests:
+        cpu: 2000m
+        memory: 8192Mi
+
+    persistence:
+      dataDir:
+        enabled: true
+        existingClaim: duckcraft
