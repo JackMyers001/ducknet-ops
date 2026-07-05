@@ -36,10 +36,19 @@ spec:
           - ferrite-core:9.0.0-fabric
 
           # o11y
+          - fabricexporter:1.0.22
           - spark:1.10.173-fabric
 
       extraEnv:
         JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv6Addresses=true"
+
+      extraPorts:
+        - name: metrics
+          containerPort: 25585
+          protocol: TCP
+          service:
+            enabled: true
+            port: 9100
 
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: duckcraft.mc.${DOMAIN_DN}
