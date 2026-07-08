@@ -6,6 +6,23 @@ I manage my Talos nodes with [Sidero Omni], so these config files are manually a
 
 When creating the Talos installation media in Omni, I need to select "Tunnel Omni management traffic over HTTP/2" to allow SideroLink to connect to Omni in an IPv6-only environment.
 
+## Extensions
+
+### `talos01`
+
+- `siderolabs/amd-ucode`
+- `siderolabs/amdgpu`
+
+### `talos02`
+
+- `siderolabs/i915`
+- `siderolabs/intel-ucode`
+
+### `talos03`
+
+- `siderolabs/i915`
+- `siderolabs/intel-ucode`
+
 ## Kernel Args
 
 ### `talos01`
