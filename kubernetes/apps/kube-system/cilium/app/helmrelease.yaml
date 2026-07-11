@@ -15,6 +15,9 @@ spec:
     bgpControlPlane:
       enabled: true
 
+    bpf:
+      datapathMode: netkit
+
     cgroup:
       autoMount:
         enabled: false
