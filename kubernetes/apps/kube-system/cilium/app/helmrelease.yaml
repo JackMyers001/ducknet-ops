@@ -18,6 +18,8 @@ spec:
     bpf:
       datapathMode: netkit
 
+    bpfClockProbe: true
+
     cgroup:
       autoMount:
         enabled: false
