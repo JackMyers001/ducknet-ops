@@ -22,6 +22,7 @@ spec:
 
     devices: enp1s0f+
 
+    enableIPv6BIGTCP: true
     enableIPv6Masquerade: false
 
     ipam:
