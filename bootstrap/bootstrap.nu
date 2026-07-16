@@ -99,6 +99,9 @@ apply-crds observability kube-prometheus-stack
 bootstrap-helm-release kube-system cilium $vars
 apply-kubernetes-resource kube-system cilium "networking.yaml" $vars
 
+# Spegel
+bootstrap-helm-release kube-system spegel
+
 # cert-manager
 bootstrap-helm-release cert-manager cert-manager
 
