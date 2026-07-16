@@ -25,6 +25,9 @@ spec:
         enabled: false
       hostRoot: /sys/fs/cgroup
 
+    cni:
+      exclusive: false
+
     devices: enp1s0f+
 
     enableIPv6BIGTCP: true
