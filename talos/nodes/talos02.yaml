@@ -40,3 +40,25 @@ mtu: 9000
 up: true
 addresses:
   - address: fd5a:5b4f:9241::32/64
+
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: onboard
+selector:
+  match: mac(link.permanent_addr) == "00:e0:4c:f8:06:da"
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: VLANConfig
+name: onboard.60
+vlanID: 60
+parent: onboard
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: VLANConfig
+name: onboard.70
+vlanID: 70
+parent: onboard
