@@ -6,6 +6,7 @@ namespace: media
 
 resources:
   - ./namespace.yaml
+  - ./dispatcharr/ks.yaml
   - ./plex/ks.yaml
   - ./prowlarr/ks.yaml
   - ./radarr/ks.yaml
