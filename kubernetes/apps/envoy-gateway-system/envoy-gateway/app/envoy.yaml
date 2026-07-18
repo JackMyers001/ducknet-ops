@@ -133,6 +133,12 @@ spec:
   # Enable TCP Keepalive
   tcpKeepalive: {}
 
+  tls:
+    clientValidation:
+      caCertificateRefs:
+        - kind: ConfigMap
+          name: cloudflare-origin-pull-ca
+
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
