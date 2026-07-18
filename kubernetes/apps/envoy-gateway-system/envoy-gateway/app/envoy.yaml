@@ -105,6 +105,10 @@ spec:
   # Enable TCP Keepalive
   tcpKeepalive: {}
 
+  timeout:
+    http:
+      requestTimeout: 0s
+
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
