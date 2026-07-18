@@ -120,6 +120,9 @@ spec:
       name: CF-Connecting-IP
       failClosed: true
 
+  http2:
+    onInvalidMessage: TerminateStream
+
   # Enable HTTP3
   http3: {}
 
@@ -137,6 +140,9 @@ kind: ClientTrafficPolicy
 metadata:
   name: internal
 spec:
+  http2:
+    onInvalidMessage: TerminateStream
+
   # Enable HTTP3
   http3: {}
 
