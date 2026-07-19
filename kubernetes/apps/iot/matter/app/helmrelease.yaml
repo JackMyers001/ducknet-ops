@@ -1,0 +1,84 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/helmrelease-helm-v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: matter
+  interval: 1h
+  values:
+    controllers:
+      matter:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/matter-js/matterjs-server
+              tag: 1.2.7@sha256:3f2b19c26fa21f9a855fd1e31cc8e1b174e8fcece881ab4ac7f56b5d828446a6
+
+            env:
+              PRODUCTION_MODE: "true"
+              TZ: Australia/Perth
+
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+
+    defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [
+            {
+              "name": "iot-wan",
+              "namespace": "kube-system",
+              "ips": ["10.4.60.5/24"],
+              "mac": "b8:04:1b:07:23:3b"
+            }
+          ]
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        fsGroup: 65534
+        fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      app:
+        ports:
+          http:
+            port: 5580
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.${DOMAIN_DN}"
+        parentRefs:
+          - name: envoy-internal
+            namespace: envoy-gateway-system
+
+    persistence:
+      data:
+        existingClaim: "{{ .Release.Name }}"
+
+      tmp:
+        type: emptyDir
