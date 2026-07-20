@@ -25,6 +25,11 @@ machine:
     nodeIP:
       validSubnets:
         - ${IPV6_BASE}::/48
+  sysctls:
+    net.ipv6.conf.onboard/60.accept_ra: "0"
+    net.ipv6.conf.onboard/70.accept_ra: "0"
+    net.ipv6.conf.onboard/60.autoconf: "0"
+    net.ipv6.conf.onboard/70.autoconf: "0"
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
 apiVersion: v1alpha1
