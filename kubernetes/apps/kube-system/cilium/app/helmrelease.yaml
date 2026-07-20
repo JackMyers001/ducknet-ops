@@ -28,7 +28,7 @@ spec:
     cni:
       exclusive: false
 
-    devices: enp1s0f+
+    devices: enp1s0f0np+
 
     enableIPv6BIGTCP: true
     enableIPv6Masquerade: false
