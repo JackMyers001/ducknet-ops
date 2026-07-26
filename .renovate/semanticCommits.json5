@@ -9,5 +9,21 @@
       matchUpdateTypes: ["digest"],
       commitMessageExtra: "({{currentDigestShort}} ➔ {{newDigestShort}})",
     },
+    {
+      matchDatasources: ["docker"],
+      semanticCommitScope: "container",
+      commitMessageTopic: "image {{depName}}",
+    },
+    {
+      matchDatasources: ["helm"],
+      semanticCommitScope: "helm",
+      commitMessageTopic: "chart {{depName}}",
+    },
+    {
+      matchManagers: ["mise"],
+      semanticCommitType: "chore",
+      semanticCommitScope: "mise",
+      commitMessageTopic: "tool {{depName}}",
+    },
   ],
 }
