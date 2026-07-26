@@ -1,0 +1,107 @@
+---
+name: Review - Flux Rendered Diff
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .github/workflows/review-flate-diff.yaml
+      - kubernetes/**
+
+concurrency:
+  group: flate-diff-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions: {}
+
+jobs:
+  diff:
+    name: Flate Diff
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Setup Flate
+        uses: home-operations/flate/action@bf3405a189626478b0aa6ec98dc4d6f7d419df17 # v0.4.12
+        with:
+          cache: true
+
+      - name: Run Flate diff
+        id: diff
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          FLATE_PATH: kubernetes/flux/cluster
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          flate diff all \
+            --base "$BASE_SHA" \
+            --allow-missing-secrets \
+            --skip-kinds ValidatingWebhookConfiguration \
+            --skip-kinds MutatingWebhookConfiguration \
+            --output github > flate.diff
+
+          if [[ ! -s flate.diff ]]; then
+            echo "has_diff=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "has_diff=true" >> "$GITHUB_OUTPUT"
+
+          readonly COMMENT_LIMIT=60000
+          if (( $(wc -c < flate.diff) > COMMENT_LIMIT )); then
+            # Remove the possibly partial final line, preserving valid Markdown/UTF-8.
+            head -c "$COMMENT_LIMIT" flate.diff | sed '$d' > flate-comment.diff
+          else
+            cp flate.diff flate-comment.diff
+          fi
+
+      - name: Upload full diff
+        if: steps.diff.outputs.has_diff == 'true'
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: flate-diff
+          path: flate.diff
+          retention-days: 7
+
+      - name: Add or update diff comment
+        if: steps.diff.outputs.has_diff == 'true'
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: flate
+          path: flate-comment.diff
+          message: |
+            ```diff
+            {{{content}}}
+            ```
+
+            Output may be truncated. Full output is available in the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).
+
+      - name: Update comment when no changes remain
+        if: steps.diff.outputs.has_diff == 'false'
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: flate
+          message: |
+            > [TIP]
+            > No rendered Kubernetes changes detected.
+
+      - name: Update comment when Flate fails
+        if: failure() && steps.diff.outcome == 'failure'
+        uses: marocchino/sticky-pull-request-comment@5770ad5eb8f42dd2c4f34da00c94c5381e49af88 # v3.0.5
+        with:
+          header: flate
+          message: |
+            > [!CAUTION]
+            >  Flate failed to render the Kubernetes manifests. See the [workflow run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.
