@@ -2,6 +2,7 @@
   "recommendations": [
     "BlueGlassBlock.better-json5",
     "EditorConfig.EditorConfig",
+    "github.vscode-github-actions",
     "redhat.vscode-yaml",
     "tamasfe.even-better-toml",
     "TheNuProjectContributors.vscode-nushell-lang",
