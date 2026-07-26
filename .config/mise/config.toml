@@ -17,3 +17,6 @@ run = "hk check --all --slow"
 
 [tasks.lint-fix]
 run = "hk fix --all --slow"
+
+[settings]
+lockfile = true
