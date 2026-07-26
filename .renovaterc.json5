@@ -6,6 +6,7 @@
     "github>jackmyers001/ducknet-ops//.renovate/groups.json5",
     "github>jackmyers001/ducknet-ops//.renovate/managerFilePatterns.json5",
     "github>jackmyers001/ducknet-ops//.renovate/semanticCommits.json5",
+    "helpers:pinGitHubActionDigestsToSemver",
     ":dependencyDashboard",
     ":disableRateLimiting",
     ":timezone(Australia/Perth)",
