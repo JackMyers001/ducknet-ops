@@ -128,7 +128,7 @@ checksum = "sha256:8d6f2b51beb6f992b5b1de8b85a98bdf18de74096b724d17fa06219fc23f2
 url = "https://github.com/bitwarden/sdk-sm/releases/download/bws-v2.1.0/bws-x86_64-pc-windows-msvc-2.1.0.zip"
 
 [[tools."cargo:https://github.com/nushell/nufmt"]]
-version = "rev-a24c2b1bc7f573b1a8b2c4a453e989407a4d29c8"
+version = "rev:a24c2b1bc7f573b1a8b2c4a453e989407a4d29c8"
 backend = "cargo:https://github.com/nushell/nufmt"
 
 [[tools.helm]]
