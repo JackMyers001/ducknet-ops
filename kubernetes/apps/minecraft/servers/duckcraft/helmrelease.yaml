@@ -41,7 +41,7 @@ spec:
           - spark:1.10.173-fabric
 
       extraEnv:
-        JAVA_TOOL_OPTIONS: "-Djava.net.preferIPv6Addresses=true"
+        PREFER_IPv6: "true"
 
       extraPorts:
         - name: metrics
