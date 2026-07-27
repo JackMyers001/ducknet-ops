@@ -12,7 +12,7 @@ spec:
   values:
     image:
       repository: itzg/mc-router
-      tag: 1.44.0@sha256:74c0f682cb45a1ac7ac25082c63f236bd6b04395508ad41d5825fd8cc8828b8f
+      tag: 1.45.1@sha256:c0ba7037de0d2d91e093da1cbe528bb1ec0806abd4de8442d44092f4f39fe94e
 
     minecraftRouter:
       useProxyProtocol: true
