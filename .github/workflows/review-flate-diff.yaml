@@ -94,7 +94,7 @@ jobs:
         with:
           header: flate
           message: |
-            > [TIP]
+            > [!TIP]
             > No rendered Kubernetes changes detected.
 
       - name: Update comment when Flate fails
