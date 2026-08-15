@@ -16,7 +16,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dispatcharr/dispatcharr
-              tag: 0.27.2-20260718004322@sha256:43e4f9791ea68b599e3be2a7dad8579871a346d7b90b6f63c6fc1922edf6a722
+              tag: 0.29.0@sha256:df768adcb9993b58f5e67010cc802c8659b7f964cb1213ab7ff9bb9384db9145
 
             env:
               TZ: Australia/Perth
