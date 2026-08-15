@@ -5,6 +5,9 @@ kind: SnapshotPolicy
 metadata:
   name: ${APP}
 spec:
+  compression:
+    compressor: zstd
+
   credentialProjection:
     enabled: true
 
@@ -13,8 +16,10 @@ spec:
     name: nas
 
   retention:
-    keepDaily: 7
+    keepLatest: 3
     keepHourly: 24
+    keepDaily: 7
+    keepWeekly: 4
 
   sources:
     - pvc:
