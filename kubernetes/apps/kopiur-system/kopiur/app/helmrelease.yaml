@@ -10,42 +10,30 @@ spec:
     name: kopiur
   interval: 1h
   values:
-    controller:
-      listenAddr: "[::]:8081"
-      extraVolumes:
-        - name: repo
-          nfs:
-            server: coeus.storage.internal
-            path: /mnt/coeus-pool/k8s/kopiur
-      extraVolumeMounts:
-        - name: repo
-          mountPath: /repo
+    extraVolumes:
+      - name: repo
+        nfs:
+          server: coeus.storage.internal
+          path: /mnt/coeus-pool/k8s/kopiur
 
-      resources:
-        requests:
-          cpu: 100m
-        limits:
-          memory: 2Gi
-
-      streamingLists: true
+    extraVolumeMounts:
+      - name: repo
+        mountPath: /repo
 
     features:
       credentialProjection:
         enabled: true
 
-    grafanaDashboard:
-      enabled: true
-      grafanaOperator:
+    monitoring:
+      dashboards:
         enabled: true
-        matchLabels:
-          dashboards: grafana
-
-    installScope: cluster
-
-    metrics:
-      serviceMonitor:
-        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
       prometheusRule:
+        enabled: true
+      serviceMonitor:
         enabled: true
 
     podSecurityContext:
@@ -55,7 +43,8 @@ spec:
       fsGroup: 65534
       fsGroupChangePolicy: OnRootMismatch
 
-    webhook:
-      listenAddr: "[::]:8443"
-      serviceMonitor:
-        enabled: true
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 2Gi
