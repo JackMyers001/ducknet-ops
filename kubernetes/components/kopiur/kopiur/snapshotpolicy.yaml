@@ -11,6 +11,11 @@ spec:
   credentialProjection:
     enabled: true
 
+  mover:
+    securityContext:
+      runAsUser: ${KOPIUR_MOVER_UID:=65534}
+      runAsGroup: ${KOPIUR_MOVER_GID:=65534}
+
   repository:
     kind: ClusterRepository
     name: nas
