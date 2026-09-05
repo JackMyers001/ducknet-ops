@@ -1,0 +1,32 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customDatasources: {
+    modrinth: {
+      defaultRegistryUrlTemplate: "https://api.modrinth.com/v2/project/{{packageName}}/version",
+      format: "json",
+      transformTemplates: [
+        '{ "releases": [$map($, function($v) { { "version": $v.version_number, "releaseTimestamp": $v.date_published, "isStable": $v.version_type = "release", "sourceUrl": "https://modrinth.com/project/" & $v.project_id } })] }',
+      ],
+    },
+  },
+  customManagers: [
+    {
+      customType: "jsonata",
+      description: "Modrinth projects pinned in HelmRelease minecraftServer.modrinth.projects (itzg chart). Entries must be `slug:versionNumber` to be managed (unpinned entries and version IDs are ignored). Only versions published for the exact minecraftServer.version and lowercased minecraftServer.type loader are considered, matching the itzg image's primary lookup.",
+      fileFormat: "yaml",
+      managerFilePatterns: ["/helmrelease\\.ya?ml$/"],
+      matchStrings: [
+        '( $ms := spec.values.minecraftServer; $exists($ms.modrinth.projects) ? ( $mcVersion := $string($ms.version); $loader := $lowercase($string($ms.type)); $map($ms.modrinth.projects, function($p) { ( $parts := $split($string($p), ":"); $count($parts) = 2 ? { "depName": $parts[0], "currentValue": $parts[1], "registryUrl": "https://api.modrinth.com/v2/project/" & $parts[0] & "/version?loaders=%5B%22" & $loader & "%22%5D&game_versions=%5B%22" & $mcVersion & "%22%5D" } : undefined ) }) ) : undefined )',
+      ],
+      datasourceTemplate: "custom.modrinth",
+      versioningTemplate: "loose",
+    },
+  ],
+  packageRules: [
+    {
+      matchDatasources: ["custom.modrinth"],
+      semanticCommitScope: "minecraft",
+      commitMessageTopic: "mod {{depName}}",
+    },
+  ],
+}
