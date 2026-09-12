@@ -38,7 +38,7 @@ spec:
 
           # o11y
           - fabricexporter:1.0.22
-          - spark:1.10.173-fabric
+          - spark:1.10.185-fabric
 
       extraEnv:
         PREFER_IPv6: "true"
