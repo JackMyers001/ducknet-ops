@@ -1,19 +1,19 @@
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: HostnameConfig
 hostname: talos02
 auto: off
 
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: cluster
 selector:
   match: mac(link.permanent_addr) == "ec:0d:9a:c0:33:f4"
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: LinkConfig
 name: cluster
@@ -25,14 +25,14 @@ kind: DHCPv6Config
 name: cluster
 
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: storage
 selector:
   match: mac(link.permanent_addr) == "ec:0d:9a:c0:33:f5"
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: LinkConfig
 name: storage
@@ -42,21 +42,21 @@ addresses:
   - address: fd5a:5b4f:9241::32/64
 
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: LinkAliasConfig
 name: onboard
 selector:
   match: mac(link.permanent_addr) == "00:e0:4c:f8:06:da"
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: VLANConfig
 name: onboard.60
 vlanID: 60
 parent: onboard
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: VLANConfig
 name: onboard.70

@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 cluster:
   allowSchedulingOnControlPlanes: true
   etcd:
@@ -31,20 +31,20 @@ machine:
     net.ipv6.conf.onboard/60.autoconf: "0"
     net.ipv6.conf.onboard/70.autoconf: "0"
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: ResolverConfig
 nameservers:
   - address: ${IPV6_BASE}:1020::1
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: VolumeConfig
 name: EPHEMERAL
 provisioning:
   maxSize: 100GiB
 ---
-# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.13/schemas/config.schema.json
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: UserVolumeConfig
 name: local-hostpath
