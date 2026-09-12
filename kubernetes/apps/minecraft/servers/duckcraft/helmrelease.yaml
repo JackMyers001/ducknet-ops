@@ -45,6 +45,12 @@ spec:
           - fabricexporter:1.0.22
           - spark:1.10.173-fabric
 
+      vanillaTweaksShareCodes:
+        - LX6rN2 # Double Shulker Shells v1.3.17
+        - 7vpTSd # Track Statistics v1.1.19
+        - 9k5Ikg # Track Raw Statistics v1.7.13
+        - Rc9c6Z # Unlock All Recipes v2.0.18
+
       extraEnv:
         PREFER_IPv6: "true"
 
