@@ -39,6 +39,6 @@ When creating the Talos installation media in Omni, I need to select "Tunnel Omn
 
 - `iommu=pt`
 
-### `talos03
+### `talos03`
 
 - `iommu=pt`
