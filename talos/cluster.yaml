@@ -1,41 +1,69 @@
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 cluster:
-  allowSchedulingOnControlPlanes: true
   etcd:
     advertisedSubnets:
       - ${IPV6_BASE}::/48
   network:
-    cni:
-      name: none
-    podSubnets:
-      - ${IPV6_BASE}:6900::/56
-    serviceSubnets:
-      - fd00:10:96::/112
+    $patch: delete
   proxy:
+    # TODO: change to `KubeProxyConfig` once Omni stops overwriting a `delete` patch
     disabled: true
 machine:
-  files:
-    - op: create
-      path: /etc/cri/conf.d/20-customization.part
-      content: |
-        [plugins."io.containerd.cri.v1.images"]
-          discard_unpacked_layers = false
-  kubelet:
-    nodeIP:
-      validSubnets:
-        - ${IPV6_BASE}::/48
-  sysctls:
-    net.ipv6.conf.onboard/60.accept_ra: "0"
-    net.ipv6.conf.onboard/70.accept_ra: "0"
-    net.ipv6.conf.onboard/60.autoconf: "0"
-    net.ipv6.conf.onboard/70.autoconf: "0"
+  features:
+    hostDNS:
+      $patch: delete
+  nodeLabels:
+    $patch: delete
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: CRICustomizationConfig
+name: spegel
+content: |
+  [plugins."io.containerd.cri.v1.images"]
+    discard_unpacked_layers = false
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: KubeFlannelCNIConfig
+$patch: delete
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: KubeNetworkConfig
+podSubnets:
+  - ${IPV6_BASE}:6900::/56
+serviceSubnets:
+  - fd00:10:96::/112
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+nodeIP:
+  validSubnets:
+    - ${IPV6_BASE}::/48
+taints:
+  node-role.kubernetes.io/control-plane:
+    $patch: delete
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: ResolverConfig
 nameservers:
   - address: ${IPV6_BASE}:1020::1
+hostDNS:
+  enabled: true
+  forwardKubeDNSToHost: false
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: SysctlConfig
+params:
+  net.ipv6.conf.onboard/60.accept_ra: "0"
+  net.ipv6.conf.onboard/70.accept_ra: "0"
+  net.ipv6.conf.onboard/60.autoconf: "0"
+  net.ipv6.conf.onboard/70.autoconf: "0"
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
