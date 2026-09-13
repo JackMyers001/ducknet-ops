@@ -23,4 +23,6 @@ spec:
       rbd:
         enabled: true
         name: rook-ceph.rbd.csi.ceph.com
+        imageSet:
+          name: rook-csi-operator-image-set-configmap
         snapshotPolicy: volumeSnapshot
