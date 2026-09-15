@@ -164,7 +164,7 @@ checksum = "sha256:36b603d5c4f4af526035631ead3adba5535250ad85f2b052960f7f874bdaf
 url = "https://get.helm.sh/helm-v4.2.1-windows-amd64.tar.gz"
 
 [[tools.hk]]
-version = "1.48.0"
+version = "1.58.1"
 backend = "aqua:jdx/hk"
 
 [tools.hk."platforms.linux-arm64"]
