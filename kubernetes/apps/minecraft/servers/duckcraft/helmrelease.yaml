@@ -30,7 +30,7 @@ spec:
       modrinth:
         projects:
           # Core
-          - fabric-api:0.160.0+26.2
+          - fabric-api:0.161.0+26.2
           - no-chat-reports:Fabric-26.2-v2.20.1
           - proxy-protocol-support:1.2.1-fabric
 
