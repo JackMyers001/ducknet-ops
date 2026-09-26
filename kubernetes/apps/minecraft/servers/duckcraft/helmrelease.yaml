@@ -12,7 +12,7 @@ spec:
   values:
     image:
       repository: itzg/minecraft-server
-      tag: 2026.9.0-java25@sha256:4e29d14082d94748f945edad3ee5307b97adc730fec49860199f5e52218a9ae3
+      tag: 2026.9.2-java25@sha256:de5d1b1a83eba576f6c8a688fac2a3523ce457724cdebc8ea48d7818b74cdf6e
 
     minecraftServer:
       eula: "TRUE"
