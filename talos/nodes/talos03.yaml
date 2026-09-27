@@ -49,6 +49,11 @@ name: onboard
 selector:
   match: mac(link.permanent_addr) == "00:e0:4c:aa:1a:4c"
 ---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: onboard
+up: true
+---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
 kind: VLANConfig
