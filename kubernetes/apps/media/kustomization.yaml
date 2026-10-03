@@ -6,6 +6,7 @@ namespace: media
 
 resources:
   - ./namespace.yaml
+  - ./cross-seed/ks.yaml
   - ./dispatcharr/ks.yaml
   - ./plex/ks.yaml
   - ./prowlarr/ks.yaml
