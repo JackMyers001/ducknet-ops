@@ -15,8 +15,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/autobrr/qui
-              tag: v1.30.0@sha256:1172ca40283330445d61189263a65a31ba703770a230b9e2a913f6e57bc2dd23
+              repository: ghcr.io/jackmyers001/qui
+              tag: v1.30.0-dirscan-test@sha256:90ce71050a4272a6830600cfea21a1c165bea9fcb4134bcf971c2df5d84ce0a3
 
             env:
               QUI__AUTH_DISABLED: true
