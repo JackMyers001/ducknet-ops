@@ -1,0 +1,16 @@
+{
+  "trash_id": "local-sonarr-webdl",
+  "name": "WEB-DL",
+  "includeCustomFormatWhenRenaming": false,
+  "specifications": [
+    {
+      "name": "WEBDL",
+      "implementation": "SourceSpecification",
+      "negate": false,
+      "required": true,
+      "fields": {
+        "value": 3
+      }
+    }
+  ]
+}

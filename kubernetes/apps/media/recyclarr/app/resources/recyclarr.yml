@@ -76,6 +76,14 @@ sonarr:
             score: 100
           - trash_id: *sonarrWeb2160p
             score: 100
+      - # Prefer WEB-DL over WEBRip
+        trash_ids:
+          - local-sonarr-webdl # WEB-DL
+        assign_scores_to:
+          - trash_id: *sonarrWeb1080p
+            score: 5
+          - trash_id: *sonarrWeb2160p
+            score: 5
       - # Unwanted
         trash_ids:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups

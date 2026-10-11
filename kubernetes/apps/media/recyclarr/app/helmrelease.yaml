@@ -68,6 +68,10 @@ spec:
         globalMounts:
           - path: /config/recyclarr.yml
             subPath: recyclarr.yml
+          - path: /config/settings.yml
+            subPath: settings.yml
+          - path: /custom-formats/sonarr/webdl.json
+            subPath: sonarr-webdl.json
 
       tmp:
         type: emptyDir

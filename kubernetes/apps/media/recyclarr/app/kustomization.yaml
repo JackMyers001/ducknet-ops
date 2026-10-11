@@ -10,5 +10,7 @@ configMapGenerator:
   - name: recyclarr-configmap
     files:
       - recyclarr.yml=./resources/recyclarr.yml
+      - settings.yml=./resources/settings.yml
+      - sonarr-webdl.json=./resources/custom-formats/sonarr/webdl.json
 generatorOptions:
   disableNameSuffixHash: true
