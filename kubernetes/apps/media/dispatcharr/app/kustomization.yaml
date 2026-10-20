@@ -5,3 +5,23 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+
+# Dispatcharr runs as root but keeps its data as 1000:1000 (and some as root), so back it up with a
+# privileged root Kopiur mover. Root is squashed to 65534 on the NAS, like every other mover.
+# This lives here rather than in ks.yaml, as cluster-apps replaces every Kustomization's `patches`.
+patches:
+  - patch: |-
+      apiVersion: kopiur.home-operations.com/v1alpha1
+      kind: _
+      metadata:
+        name: _
+      spec:
+        mover:
+          privilegedMode: true
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+    target:
+      group: kopiur.home-operations.com
+      kind: SnapshotPolicy|Restore
