@@ -1,5 +1,8 @@
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+# Omni generates this cluster's config with its initial (pre-1.14) Talos version contract,
+# so Kubernetes components must be configured via the legacy v1alpha1 fields here rather
+# than the newer Kube*Config documents, or Talos rejects the config as conflicting.
 cluster:
   controllerManager:
     extraArgs:
