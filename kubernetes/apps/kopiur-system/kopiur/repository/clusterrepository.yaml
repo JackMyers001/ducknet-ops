@@ -45,5 +45,18 @@ spec:
 
     ttlSecondsAfterFinished: 300
 
+  maintenance:
+    schedule:
+      quick:
+        cron: 0 * * * *
+        jitter: 10m
+      full:
+        cron: 0 3 * * *
+        jitter: 1h
+
+  parameters:
+    epoch:
+      minDuration: 1h
+
   scheduleDefaults:
     timezone: Australia/Perth
