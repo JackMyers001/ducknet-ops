@@ -34,6 +34,14 @@ spec:
           - name: pg_autoscaler
             enabled: true
 
+      # https://rook.io/docs/rook/v1.20/Storage-Configuration/Advanced/cephx-key-rotation/#cve-2025-30156-resolution
+      security:
+        cephx:
+          allowedCiphers:
+            - aes256k
+          csi:
+            keyType: aes256k
+
       network:
         dualStack: false
         ipFamily: IPv6
