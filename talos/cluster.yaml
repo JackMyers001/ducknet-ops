@@ -1,14 +1,22 @@
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 cluster:
+  controllerManager:
+    extraArgs:
+      bind-address: "::"
   etcd:
     advertisedSubnets:
       - ${IPV6_BASE}::/48
+    extraArgs:
+      listen-metrics-urls: http://[::]:2381
   network:
     $patch: delete
   proxy:
     # TODO: change to `KubeProxyConfig` once Omni stops overwriting a `delete` patch
     disabled: true
+  scheduler:
+    extraArgs:
+      bind-address: "::"
 machine:
   features:
     hostDNS:
@@ -46,6 +54,19 @@ nodeIP:
 taints:
   node-role.kubernetes.io/control-plane:
     $patch: delete
+---
+# yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
+apiVersion: v1alpha1
+kind: NetworkRuleConfig
+name: controlplane-metrics
+portSelector:
+  ports:
+    - 2381 # etcd
+    - 10257 # kube-controller-manager
+    - 10259 # kube-scheduler
+  protocol: tcp
+ingress:
+  - subnet: ${IPV6_BASE}:6900::/56
 ---
 # yaml-language-server: $schema=https://docs.siderolabs.com/talos/v1.14/schemas/config.schema.json
 apiVersion: v1alpha1
