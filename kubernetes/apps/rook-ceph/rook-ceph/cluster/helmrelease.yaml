@@ -11,6 +11,12 @@ spec:
   interval: 1h
   values:
     cephClusterSpec:
+      cephConfig:
+        mon:
+          # Mons live on Talos' EPHEMERAL partition, which kubelet image GC keeps at 80-85% used.
+          # Match kubelet's `nodefs.available` hard eviction threshold instead of the default 30%.
+          mon_data_avail_warn: "10"
+
       csi:
         readAffinity:
           enabled: true
