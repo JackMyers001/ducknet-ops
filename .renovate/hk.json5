@@ -1,0 +1,24 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  customManagers: [
+    {
+      customType: "regex",
+      description: "hk schema version in hk.pkl, updated alongside the mise tool",
+      managerFilePatterns: ["/^hk\\.pkl$/"],
+      matchStrings: ["download/v(?<currentValue>[^/]+)/hk@[^#]+#"],
+      depNameTemplate: "hk",
+      packageNameTemplate: "jdx/hk",
+      datasourceTemplate: "github-releases",
+      extractVersionTemplate: "^v(?<version>.+)$",
+      autoReplaceStringTemplate: "download/v{{{newValue}}}/hk@{{{newValue}}}#",
+    },
+  ],
+  packageRules: [
+    {
+      matchManagers: ["custom.regex"],
+      matchDepNames: ["hk"],
+      semanticCommitScope: "mise",
+      commitMessageTopic: "tool hk",
+    },
+  ],
+}
