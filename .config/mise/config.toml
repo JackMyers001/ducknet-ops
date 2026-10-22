@@ -9,7 +9,7 @@ hk = "2.8.0"
 kubectl = "1.37.1"
 kustomize = "5.8.3"
 oxfmt = "0.74.0"
-pkl = "0.32.1"
+pkl = "0.32.2"
 vals = "0.50.0"
 
 [tasks.lint]
