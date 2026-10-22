@@ -17,11 +17,13 @@ When creating the Talos installation media in Omni, I need to select "Tunnel Omn
 
 - `siderolabs/i915`
 - `siderolabs/intel-ucode`
+- `siderolabs/realtek-firmware`
 
 ### `talos03`
 
 - `siderolabs/i915`
 - `siderolabs/intel-ucode`
+- `siderolabs/realtek-firmware`
 
 ## Kernel Args
 
