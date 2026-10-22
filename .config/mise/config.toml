@@ -10,7 +10,7 @@ kubectl = "1.37.1"
 kustomize = "5.8.3"
 oxfmt = "0.72.0"
 pkl = "0.32.1"
-vals = "0.47.0"
+vals = "0.50.0"
 
 [tasks.lint]
 run = "hk check --all --slow"
