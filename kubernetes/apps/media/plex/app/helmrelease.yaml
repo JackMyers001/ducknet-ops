@@ -60,6 +60,65 @@ spec:
               limits:
                 memory: 16Gi
 
+          # Plex only trusts X-Forwarded-For from private (RFC1918/ULA) or loopback peers, and the
+          # Envoy pods have GUAs. Caddy sits in front of Plex over loopback and passes the request
+          # to Plex to ensure the XFF header is trusted/used
+          caddy:
+            image:
+              repository: mirror.gcr.io/library/caddy
+              tag: 2.11.7-alpine@sha256:eb4d35b7452d1ab6171fbdbe8d9275b2301dad6dad92115d91e19fb9b24d510f
+
+            env:
+              XDG_DATA_HOME: /tmp/caddy
+
+            probes:
+              liveness: &caddyProbe
+                enabled: true
+                custom: true
+                spec:
+                  tcpSocket:
+                    port: &caddyPort 8080
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+
+              readiness: *caddyProbe
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              # The Caddy binary is built with the NET_BIND_SERVICE capability attached, so it fails
+              # to start unless that capability is allowed, even though it doesn't bind port <1024
+              capabilities: { drop: ["ALL"], add: ["NET_BIND_SERVICE"] }
+
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 256Mi
+
+    configMaps:
+      caddy:
+        data:
+          Caddyfile: |
+            {
+              admin off
+              persist_config off
+              servers {
+                # Envoy appends the real client IP to XFF. Strict mode makes {client_ip} the
+                # right-most entry outside the pod CIDR, so client-supplied entries are ignored
+                trusted_proxies static ${IPV6_BASE}:6900::/56
+                trusted_proxies_strict
+              }
+            }
+
+            :8080 {
+              reverse_proxy [::1]:32400 {
+                # Plex uses the last XFF entry, so replace rather than append
+                header_up X-Forwarded-For {client_ip}
+              }
+            }
+
     defaultPodOptions:
       resourceClaims:
         - name: gpu
@@ -76,7 +135,10 @@ spec:
       app:
         ports:
           http:
+            primary: true
             port: *port
+          caddy:
+            port: *caddyPort
 
     route:
       app:
@@ -90,19 +152,35 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: *port
+                port: *caddyPort
 
     persistence:
+      caddy:
+        type: configMap
+        identifier: caddy
+        advancedMounts:
+          plex:
+            caddy:
+              - path: /etc/caddy/Caddyfile
+                subPath: Caddyfile
+                readOnly: true
+
       config:
         existingClaim: "{{ .Release.Name }}"
+        advancedMounts:
+          plex:
+            app:
+              - path: /config
 
       media:
         type: nfs
         server: coeus.storage.internal
         path: /mnt/coeus-pool/media
-        globalMounts:
-          - path: /media
-            readOnly: true
+        advancedMounts:
+          plex:
+            app:
+              - path: /media
+                readOnly: true
 
       tmp:
         type: emptyDir
