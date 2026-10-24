@@ -43,7 +43,7 @@ spec:
 
           # o11y
           - fabricexporter:1.0.22
-          - spark:1.10.173-fabric
+          - spark:1.10.187-fabric
 
       vanillaTweaksShareCodes:
         - LX6rN2 # Double Shulker Shells v1.3.17
