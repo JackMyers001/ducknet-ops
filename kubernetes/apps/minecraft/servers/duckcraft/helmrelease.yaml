@@ -26,6 +26,7 @@ spec:
       motd: DuckCraft
 
       memory: 8192M
+      jvmXXOpts: -XX:+UseZGC -XX:+UseCompactObjectHeaders -XX:+UseTransparentHugePages -XX:+AlwaysPreTouch
 
       modrinth:
         projects:
@@ -78,7 +79,7 @@ spec:
     resources:
       requests:
         cpu: 2000m
-        memory: 8192Mi
+        memory: 10Gi
 
     persistence:
       dataDir:
