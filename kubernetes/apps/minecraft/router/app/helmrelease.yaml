@@ -11,8 +11,11 @@ spec:
   interval: 1h
   values:
     image:
-      repository: itzg/mc-router
-      tag: 1.49.0@sha256:76697861c41e7d64880accf0d25e953a3c2d871e6f5f0922d7c830ffcb2b75ab
+      repository: ghcr.io/jackmyers001/mc-router
+      tag: 1.49.0-nat64-85f901f@sha256:8d6cf0576459b5075bed6309b8129a15a05733dc479dc2d3edb233eabbcd9b90
+
+    extraEnv:
+      NAT64_PREFIXES: 64:ff9b:1::/96
 
     minecraftRouter:
       useProxyProtocol: true
