@@ -31,6 +31,7 @@ spec:
         projects:
           # Core
           - fabric-api:0.165.0+26.3
+          - lithostitched:2.0.6-fabric-26.3
           - no-chat-reports:Fabric-26.3-v2.21.0
           - proxy-protocol-support:1.2.1-fabric
 
@@ -44,6 +45,11 @@ spec:
           # o11y
           - fabricexporter:tuPsGk8g
           - spark:1.10.187-fabric
+
+          # World Generation
+          - incendium:5.5.4+26.3
+          - nullscape:2.0.1+26.3
+          - terralith:2.6.5+26.3
 
           # Misc
           - appleskin:PHjDtQay
