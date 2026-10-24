@@ -81,6 +81,16 @@ spec:
         cpu: 2000m
         memory: 10Gi
 
+    extraVolumes:
+      - volumes:
+          - name: config
+            configMap:
+              name: duckcraft-config
+        volumeMounts:
+          - name: config
+            mountPath: /config
+            readOnly: true
+
     persistence:
       dataDir:
         enabled: true
