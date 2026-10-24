@@ -16,7 +16,7 @@ spec:
 
     minecraftServer:
       eula: "TRUE"
-      version: "26.2"
+      version: "26.3"
       type: FABRIC
 
       difficulty: hard
@@ -30,26 +30,26 @@ spec:
       modrinth:
         projects:
           # Core
-          - fabric-api:0.160.0+26.2
-          - no-chat-reports:Fabric-26.2-v2.20.1
+          - fabric-api:0.165.0+26.3
+          - no-chat-reports:Fabric-26.3-v2.21.0
           - proxy-protocol-support:1.2.1-fabric
 
           # Optimisation
-          - c2me-fabric:0.4.2-alpha.0.43+26.2
+          - c2me-fabric:0.4.2-alpha.0.106+26.3
           - ferrite-core:9.0.0-fabric
-          - lithium:mc26.2-0.25.3-fabric
-          - krypton:0.3.1
-          - scalablelux:0.3.0-alpha.0.3+26.2
+          - lithium:mc26.3-0.26.2-fabric
+          - krypton:0.3.2
+          - scalablelux:0.3.0-alpha.0.6+26.3
 
           # o11y
-          - fabricexporter:1.0.22
-          - spark:1.10.173-fabric
+          - fabricexporter:tuPsGk8g
+          - spark:1.10.187-fabric
 
       vanillaTweaksShareCodes:
-        - LX6rN2 # Double Shulker Shells v1.3.17
-        - 7vpTSd # Track Statistics v1.1.19
-        - 9k5Ikg # Track Raw Statistics v1.7.13
-        - Rc9c6Z # Unlock All Recipes v2.0.18
+        - VrvBBu # Double Shulker Shells v1.3.18
+        - XG3IJf # Track Statistics v1.1.20
+        - JoVezc # Track Raw Statistics v1.7.14
+        - 3wHtwj # Unlock All Recipes v2.0.19
 
       extraEnv:
         PREFER_IPv6: "true"
