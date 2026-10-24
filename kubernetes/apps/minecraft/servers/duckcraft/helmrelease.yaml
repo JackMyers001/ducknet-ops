@@ -46,6 +46,7 @@ spec:
           - spark:1.10.187-fabric
 
           # Misc
+          - appleskin:PHjDtQay
           - distanthorizons:3.3.4-26.3
 
       vanillaTweaksShareCodes:
