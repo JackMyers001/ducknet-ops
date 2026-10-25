@@ -1,0 +1,28 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: plex-egress
+spec:
+  groups:
+    - name: plex-egress
+      rules:
+        # Alert on Plex attempting to reach destinations that are not allowed by the network policy.
+        # sentry.io (crash reports) is blocked on purpose, so it's ignored.
+        # destination is the DNS name, or the IP for connections made without a lookup.
+        - alert: PlexEgressDropped
+          expr: |
+            sum by (destination, port, protocol) (
+              increase(hubble_flows_to_world_total{source_namespace="media", source_workload="plex", verdict="DROPPED", destination!~"(.+\\.)?sentry\\.io"}[1h])
+            ) > 0
+            or
+            count by (destination, port, protocol) (
+              hubble_flows_to_world_total{source_namespace="media", source_workload="plex", verdict="DROPPED", destination!~"(.+\\.)?sentry\\.io"}
+              unless
+              hubble_flows_to_world_total{source_namespace="media", source_workload="plex", verdict="DROPPED", destination!~"(.+\\.)?sentry\\.io"} offset 1h
+            )
+          labels:
+            severity: warning
+          annotations:
+            description: "Network policy blocked Plex from connecting to {{ .Labels.destination }} on {{ .Labels.protocol }} port {{ .Labels.port }}"
