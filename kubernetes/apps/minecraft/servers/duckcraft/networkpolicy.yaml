@@ -1,0 +1,62 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: duckcraft
+spec:
+  endpointSelector:
+    matchLabels:
+      app: duckcraft-minecraft
+
+  ingress:
+    # mc-router (Players)
+    - fromEndpoints:
+        - matchLabels:
+            app.kubernetes.io/name: mc-router
+      toPorts:
+        - ports:
+            - port: "25565"
+              protocol: TCP
+
+    # Prometheus
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: observability
+            app.kubernetes.io/name: prometheus
+      toPorts:
+        - ports:
+            - port: "25585"
+              protocol: TCP
+
+  egress:
+    # DNS
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports:
+            - port: "53"
+              protocol: TCP
+            - port: "53"
+              protocol: UDP
+          rules:
+            dns:
+              - matchPattern: "*"
+
+    - toFQDNs:
+        # Player auth (sessionserver), version manifests + server jars (piston-meta/piston-data)
+        - matchPattern: "*.minecraft.net"
+        - matchPattern: "*.minecraftservices.com"
+        - matchPattern: "*.mojang.com"
+        # Mods (api + cdn) and the Fabric loader (meta + maven)
+        - matchPattern: "*.fabricmc.net"
+        - matchPattern: "*.modrinth.com"
+        - matchName: vanillatweaks.net
+        # Spark profiler uploads + live viewer
+        - matchPattern: "*.lucko.me"
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
