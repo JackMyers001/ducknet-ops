@@ -63,6 +63,9 @@ spec:
                   - requiredDuringSchedulingIgnoredDuringExecution
 
             - name: RemovePodsViolatingNodeTaints
+              args:
+                excludedTaints:
+                  - node.cilium.io/agent-not-ready
 
             - name: RemovePodsViolatingTopologySpreadConstraint
 
