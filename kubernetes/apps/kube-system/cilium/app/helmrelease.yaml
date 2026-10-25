@@ -36,6 +36,45 @@ spec:
     enableIPv6BIGTCP: true
     enableIPv6Masquerade: false
 
+    hubble:
+      enabled: true
+      eventBufferCapacity: "65535"
+
+      metrics:
+        enabled:
+          - dns:labelsContext=source_namespace,destination_namespace
+          - drop:labelsContext=source_namespace,destination_namespace;sourceContext=workload-name|reserved-identity;destinationContext=workload-name|dns|reserved-identity
+          - tcp:labelsContext=source_namespace,destination_namespace
+          - flow:labelsContext=source_namespace,destination_namespace;sourceContext=workload-name|reserved-identity;destinationContext=workload-name|reserved-identity
+          - port-distribution:labelsContext=source_namespace,destination_namespace
+          - icmp:labelsContext=source_namespace,destination_namespace
+          - flows-to-world:any-drop;port;labelsContext=source_namespace,source_workload
+
+        dashboards:
+          enabled: true
+
+        serviceMonitor:
+          enabled: true
+          relabelings:
+            - sourceLabels: [__meta_kubernetes_pod_node_name]
+              targetLabel: node
+              action: replace
+            - targetLabel: cluster
+              replacement: ducknet
+
+      relay:
+        enabled: true
+        rollOutPods: true
+
+        prometheus:
+          enabled: true
+          serviceMonitor:
+            enabled: true
+
+      ui:
+        enabled: true
+        rollOutPods: true
+
     ipam:
       mode: kubernetes
 
