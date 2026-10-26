@@ -66,6 +66,9 @@ spec:
               args:
                 excludedTaints:
                   - node.cilium.io/agent-not-ready
+                  - node.kubernetes.io/disk-pressure
+                  - node.kubernetes.io/memory-pressure
+                  - node.kubernetes.io/pid-pressure
 
             - name: RemovePodsViolatingTopologySpreadConstraint
 
