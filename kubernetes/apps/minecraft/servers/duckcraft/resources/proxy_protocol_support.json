@@ -1,11 +1,6 @@
 {
   "enableProxyProtocol": true,
-  "proxyServerIPs": [
-    "${IPV6_BASE}:6900::/56"
-  ],
-  "directAccessIPs": [
-    "::1",
-    "127.0.0.1"
-  ],
+  "proxyServerIPs": ["${IPV6_BASE}:6900::/56"],
+  "directAccessIPs": ["::1", "127.0.0.1"],
   "whitelistTCPShieldServers": false
 }
