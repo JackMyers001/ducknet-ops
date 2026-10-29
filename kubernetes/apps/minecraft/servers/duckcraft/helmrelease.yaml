@@ -34,7 +34,7 @@ spec:
           - fabric-api:0.165.0+26.3
           - lithostitched:2.0.6-fabric-26.3
           - no-chat-reports:Fabric-26.3-v2.21.0
-          - proxy-protocol-support:1.2.1-fabric
+          - proxy-protocol-support:1.2.2-fabric
 
           # Optimisation
           - c2me-fabric:0.4.2-alpha.0.106+26.3
