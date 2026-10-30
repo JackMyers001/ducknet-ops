@@ -1,0 +1,81 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kopiur.home-operations.com/clusterrepository_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: ClusterRepository
+metadata:
+  name: garage
+spec:
+  allowedNamespaces:
+    all: true
+
+  backend:
+    s3:
+      auth:
+        secretRef:
+          name: kopiur-garage-secret
+          namespace: kopiur-system
+      bucket: kopiur
+      endpoint: coeus.storage.internal:30188
+      region: garage
+      tls:
+        disableTls: true
+
+  credentialProjection:
+    allowed: true
+
+  encryption:
+    passwordSecretRef:
+      name: kopiur-garage-secret
+      namespace: kopiur-system
+      key: KOPIA_PASSWORD
+
+  moverDefaults:
+    cache:
+      capacity: 1Mi # Ignored
+      mode: Ephemeral
+      storageClassName: openebs-hostpath
+
+    podAnnotations:
+      k8s.v1.cni.cncf.io/networks: kube-system/storage-coeus
+
+    podSecurityContext:
+      fsGroup: 65534
+      fsGroupChangePolicy: OnRootMismatch
+
+    scratch:
+      capacity: 1Mi # Ignored
+      storageClassName: openebs-hostpath
+
+    securityContext:
+      runAsUser: 65534
+      runAsGroup: 65534
+
+    ttlSecondsAfterFinished: 300
+
+  maintenance:
+    schedule:
+      quick:
+        cron: 0 * * * *
+        jitter: 10m
+      full:
+        cron: 0 3 * * *
+        jitter: 1h
+
+  parameters:
+    epoch:
+      minDuration: 1h
+
+  scheduleDefaults:
+    timezone: Australia/Perth
+
+  seed:
+    from:
+      backend:
+        filesystem:
+          path: /repo
+          volume:
+            nfs:
+              server: coeus.storage.internal
+              path: /mnt/coeus-pool/k8s/kopiur
+    sync:
+      parallel: 8

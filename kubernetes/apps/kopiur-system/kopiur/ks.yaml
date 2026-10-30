@@ -23,6 +23,8 @@ metadata:
 spec:
   dependsOn:
     - name: kopiur
+    - name: multus-networks
+      namespace: kube-system
   interval: 1h
   path: ./kubernetes/apps/kopiur-system/kopiur/repository
   prune: true
