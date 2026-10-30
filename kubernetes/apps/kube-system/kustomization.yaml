@@ -13,3 +13,4 @@ resources:
   - ./multus/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./spegel/ks.yaml
+  - ./whereabouts/ks.yaml
