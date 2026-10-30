@@ -37,7 +37,7 @@ spec:
           - proxy-protocol-support:1.2.1-fabric
 
           # Optimisation
-          - c2me-fabric:0.4.2-alpha.0.106+26.3
+          - c2me-fabric:0.4.2-alpha.0.114+26.3
           - ferrite-core:9.0.0-fabric
           - lithium:mc26.3-0.26.2-fabric
           - krypton:0.3.2
