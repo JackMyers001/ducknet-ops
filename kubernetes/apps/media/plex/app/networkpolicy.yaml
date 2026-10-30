@@ -67,6 +67,7 @@ spec:
         - matchPattern: "**.plex.bz"
         - matchPattern: "**.plexapp.com"
         - matchName: artworks.thetvdb.com
+        - matchName: assets.fanart.tv
         - matchName: image.tmdb.org
         - matchName: secure.gravatar.com
       toPorts:
