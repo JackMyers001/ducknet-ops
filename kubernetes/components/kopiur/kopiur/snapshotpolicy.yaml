@@ -18,7 +18,7 @@ spec:
 
   repository:
     kind: ClusterRepository
-    name: nas
+    name: garage
 
   retention:
     keepLatest: 3
