@@ -67,15 +67,3 @@ spec:
 
   scheduleDefaults:
     timezone: Australia/Perth
-
-  seed:
-    from:
-      backend:
-        filesystem:
-          path: /repo
-          volume:
-            nfs:
-              server: coeus.storage.internal
-              path: /mnt/coeus-pool/k8s/kopiur
-    sync:
-      parallel: 8
