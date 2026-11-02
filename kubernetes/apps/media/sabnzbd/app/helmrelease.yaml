@@ -12,6 +12,9 @@ spec:
   values:
     controllers:
       sabnzbd:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
         containers:
           app:
             image:

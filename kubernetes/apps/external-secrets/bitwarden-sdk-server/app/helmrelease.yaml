@@ -10,3 +10,5 @@ spec:
     name: bitwarden-sdk-server
   interval: 1h
   values:
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"

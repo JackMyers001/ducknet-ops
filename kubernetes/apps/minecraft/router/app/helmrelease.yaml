@@ -10,6 +10,9 @@ spec:
     name: mc-router
   interval: 1h
   values:
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+
     image:
       repository: ghcr.io/jackmyers001/mc-router
       tag: 1.49.0-nat64-85f901f@sha256:8d6cf0576459b5075bed6309b8129a15a05733dc479dc2d3edb233eabbcd9b90

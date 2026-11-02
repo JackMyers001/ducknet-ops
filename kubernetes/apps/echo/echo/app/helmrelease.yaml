@@ -12,6 +12,9 @@ spec:
   values:
     controllers:
       echo:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
         strategy: RollingUpdate
         containers:
           app:

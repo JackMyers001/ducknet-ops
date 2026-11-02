@@ -10,3 +10,5 @@ spec:
     name: barman-cloud
   interval: 1h
   values:
+    commonAnnotations:
+      reloader.stakater.com/auto: "true"
