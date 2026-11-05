@@ -170,9 +170,9 @@ url = "https://github.com/bitwarden/sdk-sm/releases/download/bws-v2.1.0/bws-x86_
 url_api = "https://api.github.com/repos/bitwarden/sdk-sm/releases/assets/426507247"
 
 [[tools."cargo:https://github.com/nushell/nufmt"]]
-version = "rev:a24c2b1bc7f573b1a8b2c4a453e989407a4d29c8"
+version = "tag:v0.1.6"
 backend = "cargo:https://github.com/nushell/nufmt"
-specifiers = ["rev:a24c2b1bc7f573b1a8b2c4a453e989407a4d29c8"]
+specifiers = ["tag:v0.1.6"]
 
 [[tools.helm]]
 version = "4.3.1"
