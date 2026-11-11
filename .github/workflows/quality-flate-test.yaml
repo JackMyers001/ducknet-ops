@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - .github/flate/**
       - .github/workflows/quality-flate-test.yaml
       - kubernetes/**
 
@@ -34,4 +35,4 @@ jobs:
       - name: Run Flate test
         env:
           FLATE_PATH: kubernetes/flux/cluster
-        run: flate test all --allow-missing-secrets
+        run: flate test all --supply .github/flate/supply.yaml

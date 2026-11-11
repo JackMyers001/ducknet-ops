@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - .github/flate/**
       - .github/workflows/review-flate-diff.yaml
       - kubernetes/**
 
@@ -47,7 +48,7 @@ jobs:
 
           flate diff all \
             --base "$BASE_SHA" \
-            --allow-missing-secrets \
+            --supply .github/flate/supply.yaml \
             --skip-kinds ValidatingWebhookConfiguration \
             --skip-kinds MutatingWebhookConfiguration \
             --output github > flate.diff
