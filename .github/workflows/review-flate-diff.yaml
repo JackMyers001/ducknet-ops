@@ -6,6 +6,7 @@ on:
     branches:
       - main
     paths:
+      - .github/flate/**
       - .github/workflows/review-flate-diff.yaml
       - kubernetes/**
 
@@ -32,7 +33,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Flate
-        uses: home-operations/flate/action@631b76b69c4e58c6f4d1cb01e23616fa61aebafa # v0.6.5
+        uses: home-operations/flate/action@bbb6ebc344da051752dbdb1b413860ceffcfb63d # v0.7.3
         with:
           cache: true
 
@@ -47,7 +48,7 @@ jobs:
 
           flate diff all \
             --base "$BASE_SHA" \
-            --allow-missing-secrets \
+            --supply .github/flate/supply.yaml \
             --skip-kinds ValidatingWebhookConfiguration \
             --skip-kinds MutatingWebhookConfiguration \
             --output github > flate.diff

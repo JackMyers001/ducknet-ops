@@ -1,0 +1,84 @@
+# Dummy stand-ins for the per-namespace `global-secrets` Secret, which is created
+# on-cluster by the `global-secrets` ClusterExternalSecret and so can't be read
+# by flate offline.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: cert-manager
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: echo
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: envoy-gateway-system
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: iot
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: kube-system
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: media
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: minecraft
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: observability
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: global-secrets
+  namespace: rook-ceph
+stringData:
+  DOMAIN_DN: example.invalid
+  IPV6_BASE: "2001:db8:0"
