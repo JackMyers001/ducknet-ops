@@ -176,10 +176,51 @@ checksum = "sha256:8d6f2b51beb6f992b5b1de8b85a98bdf18de74096b724d17fa06219fc23f2
 url = "https://github.com/bitwarden/sdk-sm/releases/download/bws-v2.1.0/bws-x86_64-pc-windows-msvc-2.1.0.zip"
 url_api = "https://api.github.com/repos/bitwarden/sdk-sm/releases/assets/426507247"
 
-[[tools."cargo:https://github.com/nushell/nufmt"]]
-version = "tag:v0.1.6"
-backend = "cargo:https://github.com/nushell/nufmt"
-specifiers = ["tag:v0.1.6"]
+[[tools."github:nushell/nufmt"]]
+version = "0.1.6"
+backend = "github:nushell/nufmt"
+specifiers = ["0.1.6"]
+
+[tools."github:nushell/nufmt"."platforms.linux-arm64"]
+checksum = "sha256:58d5ea818351001a2423d465c7fedb2624bd6ed15b655f86c832f0cd7c3bcd81"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-aarch64-unknown-linux-gnu.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848923"
+
+[tools."github:nushell/nufmt"."platforms.linux-arm64-musl"]
+checksum = "sha256:58d5ea818351001a2423d465c7fedb2624bd6ed15b655f86c832f0cd7c3bcd81"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-aarch64-unknown-linux-gnu.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848923"
+
+[tools."github:nushell/nufmt"."platforms.linux-x64"]
+checksum = "sha256:c572171305370f766917aa03795032d52202cd11ebc82e0a3324bbe23892f64e"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-x86_64-unknown-linux-gnu.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848998"
+
+[tools."github:nushell/nufmt"."platforms.linux-x64-musl"]
+checksum = "sha256:fbb1de8f9140f3cc704c4c44b5e42362ad5d6ed2202f0a4afeb1fe78d4520f65"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-x86_64-unknown-linux-musl.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662849007"
+
+[tools."github:nushell/nufmt"."platforms.macos-arm64"]
+checksum = "sha256:56995c98e5e3d681f5e3f507c8918a2e27d68230a2cde452741e43897e9085cf"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-aarch64-apple-darwin.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848882"
+
+[tools."github:nushell/nufmt"."platforms.macos-x64"]
+checksum = "sha256:0aaaee4223e878144f09cc6ac882c78e098ae0b044fce0b208fd9e4f637f156c"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-x86_64-apple-darwin.tar.xz"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848936"
+
+[tools."github:nushell/nufmt"."platforms.windows-x64"]
+checksum = "sha256:731fefb41099dbdab4401c998b153ecce5b863c67b2b4b2dd87751ce8de4f77f"
+checksum_source = "mise-versions"
+url = "https://github.com/nushell/nufmt/releases/download/v0.1.6/nufmt-x86_64-pc-windows-msvc.zip"
+url_api = "https://api.github.com/repos/nushell/nufmt/releases/assets/662848977"
 
 [[tools.helm]]
 version = "4.3.1"
