@@ -8,6 +8,7 @@
     "github>jackmyers001/ducknet-ops//.renovate/hk.json5",
     "github>jackmyers001/ducknet-ops//.renovate/modrinth.json5",
     "github>jackmyers001/ducknet-ops//.renovate/managerFilePatterns.json5",
+    "github>jackmyers001/ducknet-ops//.renovate/mise.json5",
     "github>jackmyers001/ducknet-ops//.renovate/semanticCommits.json5",
     "helpers:pinGitHubActionDigestsToSemver",
     ":dependencyDashboard",

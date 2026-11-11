@@ -1,0 +1,11 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "Stop the npm manager from updating mise's native lock sidecars; the mise manager regenerates them via `mise lock`",
+      matchManagers: ["npm"],
+      matchFileNames: [".config/mise/locks/**"],
+      enabled: false,
+    },
+  ],
+}
