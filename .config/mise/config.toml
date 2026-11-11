@@ -1,6 +1,6 @@
 [tools]
 actionlint = "1.7.12"
-"aqua:nushell/nushell" = "0.116.1"
+"aqua:nushell/nushell" = "0.117.0"
 bitwarden = "2026.5.0"
 bitwarden-secrets-manager = "2.1.0"
 "cargo:https://github.com/nushell/nufmt" = "tag:v0.1.6"
