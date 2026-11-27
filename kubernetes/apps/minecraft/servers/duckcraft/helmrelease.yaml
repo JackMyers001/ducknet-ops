@@ -44,7 +44,7 @@ spec:
           - ferrite-core:9.0.0-fabric
           - lithium:mc26.3-0.26.2-fabric
           - krypton:0.3.2
-          - scalablelux:0.3.0-alpha.0.6+26.3
+          - scalablelux:0.3.0-alpha.0.7+26.3
 
           # o11y
           - fabricexporter:tuPsGk8g
